@@ -2,20 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
+[data-theme="light"] {
+  /* --background: #ffffff; */
+	--background: 255,255,255;
   --foreground: #171717;
+	--dots: #d5d7db
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="dark"] {
+  /* --background: #0a0a0a; */
+  --background: 10,10,10;
+  --foreground: #ededed;
+  --dots: #1f2937;
+}
+
+html{
+	color: var(--foreground);
+  background: rgba(var(--background),1);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  background: rgba(var(--background),1);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.dotted-bg {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background-image: radial-gradient(var(--dots), 1px, rgba(var(--background),1) 1px);
+  background-size: 16px 16px;
+  
+
+  /* Radial gradient to fade out the dots */
+  mask-image: radial-gradient(circle, rgba(var(--background),1) 30%, rgba(var(--background), 0) 90%);
+  -webkit-mask-image: radial-gradient(circle, rgba(var(--background),1) 30%, rgba(var(--background), 0) 90%);
 }
