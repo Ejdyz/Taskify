@@ -9,7 +9,7 @@ const SparklesCTA = ({title}) => {
   useEffect(() => setMounted(true), []);
   console.log("Mounted: ", mounted);
   return ( 
-    <div className="h-[100dvh] will-change z-20 w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
+    <div className="md:h-[100dvh] h-[90dvh] will-change z-20 w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
     <h1 className="text-7xl lg:text-9xl font-bold text-center relative z-20">
       {title}
     </h1>

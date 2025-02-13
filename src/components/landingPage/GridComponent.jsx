@@ -1,5 +1,6 @@
 import { GridPattern } from "@/components/ui/grid-pattern";
 import { Button } from "@heroui/button";
+import SignInModal from "../lib/SignInModal"
 
 const GridComponent = () => {
   return(
@@ -21,7 +22,7 @@ const GridComponent = () => {
           Effortless productivity, seamless experience. Get things done your way, simple, and beautifully. Try it now!
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-          <Button color="primary" size="lg">Get Started!</Button> 
+          <SignInModal color="primary" size="lg">Get Started!</SignInModal> 
           </div>
         </div>
         <GridPattern
