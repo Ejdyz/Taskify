@@ -1,12 +1,17 @@
-import DottedBackground from "@/components/lib/DottedBackground"
-import TodoListCard from "@/components/todoList/TodoListCard"
+import LandingPage from "@/components/landingPage/LandingPage"
+import MainPage from "@/components/mainPage/MainPage"
+import { auth } from "@/lib/auth/auth"
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
+  if (!session) {
+    return (
+      <LandingPage />
+    );
+  }
+
   return (
-    <DottedBackground>
-      <div className="w-full h-full flex flex-col items-center justify-center flex-wrap">
-        <TodoListCard />
-      </div>
-    </DottedBackground>
+    <MainPage session={session} />
   );
 }
