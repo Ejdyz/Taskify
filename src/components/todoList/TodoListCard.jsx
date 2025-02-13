@@ -9,7 +9,8 @@ const TodoListCard = () => {
       <button onClick={() => signIn("google")}></button>  
       </CardHeader>
       <CardBody>
-      <Button onClick={() => signIn("google")}></Button>  
+      <Button onClick={() => signIn("google")}> Login using Google</Button>  
+      <Button onClick={() => signIn("github")}> Login using GitHub</Button>  
         <p>Make beautiful websites regardless of your design experience.</p>
       </CardBody>
       <CardFooter>
