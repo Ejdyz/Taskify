@@ -9,28 +9,9 @@ import { Tooltip } from "@heroui/tooltip"
 
 const TodoListCard = ({list}) => {
   const [isFavorite, setIsFavorite] = useState(list.isFavorite)
-  
-  // {
-  //   "id": "M1N2B3V4C5X6Z7L8K9J0",
-  //   "isFavorite": false,
-  //   "updatedAt": "2022-11-10 16:20:00",
-  //   "title": "Marketing Strategy",
-  //   "tasks": [
-  //     { "title": "Identify target audience", "isMarked": true },
-  //     { "title": "Run ads", "isMarked": false },
-  //     { "title": "Analyze conversion rates", "isMarked": true },
-  //     { "title": "Adjust strategy", "isMarked": false }
-  //   ],
-  //   "author": {
-  //     "name": "Sophia Martinez",
-  //     "email": "sophia@example.com",
-  //     "image": "https://randomuser"
-  //   },
-  //   "coauthors": []
-  // }
 
   return (
-    <Card className=" w-full select-none hover:scale-105 cursor-pointer" as="a" href={`/list/${list.id}`}>
+    <Card className="w-full select-none hover:scale-105 cursor-pointer" >
       <CardHeader className="flex justify-between items-center">
         <div className="flex flex-col items-start">
           <h3 className="font-semibold text-xl">{list.title}</h3>
