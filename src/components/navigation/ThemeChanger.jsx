@@ -1,11 +1,14 @@
 "use client"
+// Hooks
 import { useEffect, useState } from "react";
-import { Select, SelectItem } from "@heroui/select";
 import { useTheme } from 'next-themes'
+// Components
+import { Select, SelectItem } from "@heroui/select";
+// Icons
 import { MoonIcon, SunIcon, SystemIcon } from "../icons/Icons";
 
 const ThemeChanger = () => {
-  const { theme,resolvedTheme,setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);

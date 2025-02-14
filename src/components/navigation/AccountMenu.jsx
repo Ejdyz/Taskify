@@ -1,9 +1,8 @@
 "use client"
-
 // Utils
 import { signOut } from "next-auth/react"
 // Components
-import ThemeChanger from "../lib/ThemeSwitcher"
+import ThemeChanger from "@/components/navigation/ThemeChanger"
 import { Avatar } from "@heroui/avatar"
 import { Popover, PopoverTrigger, PopoverContent } from "@heroui/popover"
 import { User } from "@heroui/user"

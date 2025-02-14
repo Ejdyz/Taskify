@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 // Components
 import MenuBar from "@/components/navigation/MenuBar";
-import TasksForm from "./TasksForm";
+import GoalsForm from "./GoalsForm";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 // Icons
@@ -102,7 +102,7 @@ export default function CreateWrapper() {
             Submit
           </Button>
         </MenuBar>
-        <TasksForm tasks={tasks} onTaskChange={handleTaskChange} onRemoveTask={handleRemoveTask} />
+        <GoalsForm tasks={tasks} onTaskChange={handleTaskChange} onRemoveTask={handleRemoveTask} />
         <Button onPress={handleAddTask} variant="flat" color="primary" startContent={<PlusIcon />}>
           Add Task
         </Button>

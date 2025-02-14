@@ -1,5 +1,7 @@
 "use client";
+// Hooks
 import React, { useEffect, useState} from "react";
+// Components
 import WorldMap from "@/components/ui/world-map";
  
  const WorldMapDemo = () => {

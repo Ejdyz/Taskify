@@ -1,6 +1,8 @@
 "use client"
+// Hooks
 import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+// Components
 import { SparklesCore } from "@/components/ui/sparkles";
 
 const SparklesCTA = ({title}) => {

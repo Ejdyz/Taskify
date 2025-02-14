@@ -1,11 +1,14 @@
 "use client"
+// Hooks
 import { useState } from "react"
+// Components
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card"
 import { Avatar, AvatarGroup } from "@heroui/avatar"
 import { ScrollShadow } from "@heroui/scroll-shadow"
 import { Checkbox } from "@heroui/checkbox"
-import { HeartIcon, HeartAddOutlinedIcon } from "../icons/Icons"
 import { Tooltip } from "@heroui/tooltip"
+// Icons
+import { HeartIcon, HeartAddOutlinedIcon } from "@/components/icons/Icons"
 
 const TodoListCard = ({list}) => {
   const [isFavorite, setIsFavorite] = useState(list.isFavorite)

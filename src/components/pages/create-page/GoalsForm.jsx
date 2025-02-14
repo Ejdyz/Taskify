@@ -4,9 +4,9 @@ import { Textarea } from '@heroui/input'
 import { Checkbox  } from '@heroui/checkbox'
 import { Button } from '@heroui/button'
 // Icons
-import { TrashIcon } from '../icons/Icons'
+import { TrashIcon } from '../../icons/Icons'
 
-export default function TasksForm({ tasks, onTaskChange, onRemoveTask }) {
+export default function GoalsForm({ tasks, onTaskChange, onRemoveTask }) {
   const handleCheckboxChange = (taskId, e) => {
     onTaskChange(taskId, "isMarked", e.target.checked);
   };

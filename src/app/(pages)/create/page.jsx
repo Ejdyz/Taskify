@@ -1,7 +1,7 @@
 // Utis
 import { auth } from "@/lib/auth/auth";
 // Components
-import CreateWrapper from "@/components/createPage/CreateWrapper";
+import CreateWrapper from "@/components/pages/create-page/CreateWrapper";
 import { notFound } from "next/navigation";
 
 const Page = async () => {

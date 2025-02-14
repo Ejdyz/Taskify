@@ -2,12 +2,12 @@
 // Components
 import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/tabs";
-import TodoListCard from "./TodoListCard";
-import MenuBar from "../navigation/MenuBar";
+import TodoListCard from "./TaskCard";
+import MenuBar from "../../navigation/MenuBar";
 //Icons
 import { GridIcon, ListIcon, HeartIcon, HeartSlashIcon, UnlimitedIcon, MenuBoardIcon, PlusIcon } from "@/components/icons/Icons";
 
-export default function TodoWrapper({lists}) {
+export default function TasksWrapper({lists}) {
   return (
     <div className="w-full h-screen dotted-vignette fixed overflow-auto">
       <div className="flex flex-col items-center gap-4 w-full mb-20">
