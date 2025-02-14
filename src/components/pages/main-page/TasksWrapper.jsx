@@ -3,7 +3,7 @@
 import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/tabs";
 import TodoListCard from "./TaskCard";
-import MenuBar from "../../navigation/MenuBar";
+import MenuBar from "@/components/navigation/MenuBar";
 //Icons
 import { GridIcon, ListIcon, HeartIcon, HeartSlashIcon, UnlimitedIcon, MenuBoardIcon, PlusIcon } from "@/components/icons/Icons";
 
