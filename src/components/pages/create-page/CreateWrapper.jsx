@@ -1,18 +1,19 @@
 "use client"
 // Hooks
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef } from "react";
 // Components
 import MenuBar from "@/components/navigation/MenuBar";
-import GoalsForm from "./GoalsForm";
+import GoalsEditForm from "@/components/lib/GoalsEditForm";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 // Icons
-import { TickIcon, ArrowLeftIcon, PlusIcon } from "@/components/icons/Icons";
+import { TickIcon, ArrowLeftIcon } from "@/components/icons/Icons";
 
 export default function CreateWrapper() {
   const router = useRouter();
-  const [tasks, setTasks] = useState([{ id: 1, value: "", isMarked: false },{ id: 2, value: "", isMarked: false },{ id: 3, value: "", isMarked: false }]);
+  const startingTasks = [{ id: 1, value: "", isMarked: false },{ id: 2, value: "", isMarked: false },{ id: 3, value: "", isMarked: false }]
+  const tasksRef = useRef(startingTasks);
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -20,25 +21,11 @@ export default function CreateWrapper() {
     setTitle(e.target.value);
   };
 
-  function handleAddTask() {
-    setTasks((prev) => [
-      ...prev,
-      { id: Date.now(), value: "", isMarked: false }
-    ]);
-  };
-
-  function handleTaskChange(taskId, field, value) {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === taskId ? { ...t, [field]: value } : t))
-    );
+  function handleUpdateTaskRef(tasks) {
+    tasksRef.current = tasks;
   }
 
-  function handleRemoveTask(taskId) {
-    if (tasks.length === 1) return;
-    setTasks((prev) => prev.filter((task) => task.id !== taskId));
-  }
-
-  async function handleSubmit () {      
+  async function handleSubmit (tasks) {      
 
     if(tasks.some((task) => task.value.trim() === "")){
       alert("Please fill all the tasks");
@@ -93,7 +80,7 @@ export default function CreateWrapper() {
             }}
           />
           <Button
-            onPress={handleSubmit}
+            onPress={() => handleSubmit(tasksRef.current)}
             color="success"
             variant="shadow"
             className="font-bold"
@@ -102,10 +89,7 @@ export default function CreateWrapper() {
             Submit
           </Button>
         </MenuBar>
-        <GoalsForm tasks={tasks} onTaskChange={handleTaskChange} onRemoveTask={handleRemoveTask} />
-        <Button onPress={handleAddTask} variant="flat" color="primary" startContent={<PlusIcon />}>
-          Add Task
-        </Button>
+        <GoalsEditForm startingTasks={startingTasks} handleUpdateTaskRef={handleUpdateTaskRef} />
       </div>
     </div>
   );

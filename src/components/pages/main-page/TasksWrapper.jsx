@@ -1,13 +1,17 @@
 "use client"
+// Hooks
+import { useState } from "react";
 // Components
 import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/tabs";
 import TodoListCard from "./TaskCard";
 import MenuBar from "@/components/navigation/MenuBar";
+import TasksTable from "./TasksTable";
 //Icons
 import { GridIcon, ListIcon, HeartIcon, HeartSlashIcon, UnlimitedIcon, MenuBoardIcon, PlusIcon } from "@/components/icons/Icons";
 
 export default function TasksWrapper({lists}) {
+  const [viewMode, setViewMode] = useState("grid");
   return (
     <div className="w-full h-screen dotted-vignette fixed overflow-auto">
       <div className="flex flex-col items-center gap-4 w-full mb-20">
@@ -19,19 +23,24 @@ export default function TasksWrapper({lists}) {
               <Tab key="Favorite" title={<HeartIcon className={"size-4"}/>} />
               <Tab key="Completed" title={<HeartSlashIcon className={"size-4"}/>} />
             </Tabs>
-            <Tabs>
-              <Tab key="Grid" title={<GridIcon className={"size-4"}/>} />
-              <Tab key="List" title={<ListIcon className={"size-4"} />} />
+            <Tabs onSelectionChange={setViewMode} selectedKey={viewMode} >
+              <Tab key="grid" title={<GridIcon className={"size-4"}/>} />
+              <Tab key="list" title={<ListIcon className={"size-4"} />} />
             </Tabs>
           </div>
         </MenuBar>
-        <div className="md:w-3/4 w-full md:px-0 px-2 mx-auto h-full [column-count:1] sm:[column-count:2] lg:[column-count:3] gap-4">
-          {lists.map((list, index) => (
-            <div key={index} className="break-inside-avoid mb-4">
-              <TodoListCard list={list} />
-            </div>
-          ))}
-        </div>
+        {viewMode === "grid" && (
+          <div className="md:w-3/4 w-full md:px-0 px-2 mx-auto h-full [column-count:1] sm:[column-count:2] lg:[column-count:3] gap-4">
+            {lists.map((list, index) => (
+              <div key={index} className="break-inside-avoid mb-4">
+                <TodoListCard list={list} />
+              </div>
+            ))}
+          </div>
+        )}
+        {viewMode === "list" && (
+          <TasksTable tasks={lists} />
+        )}
       </div>
     </div>
   )
