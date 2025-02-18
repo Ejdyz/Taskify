@@ -1,4 +1,4 @@
-import { createTask } from "@/lib/task";
+import { createTask } from "@/lib/task/task";
 import { NextResponse } from "next/server";
 
 export const POST = async (request) => {

@@ -1,6 +1,6 @@
 import { SubTask, Task } from "@prisma/client";
-import prisma from "./prisma/prisma";
-import { getUserIdFromSessionToken } from "./user/user";
+import prisma from "../prisma/prisma";
+import { getUserIdFromSessionToken } from "../user/user";
 
 export const createTask = async (taskTitle: string, subTasks: any[]) => {
 
