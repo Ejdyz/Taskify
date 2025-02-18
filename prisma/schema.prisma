@@ -83,6 +83,8 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
+
+
 model Task {
   id String @id @default(cuid())
   name String
@@ -92,4 +94,14 @@ model Task {
   authorId String
 
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  subTask SubTask[]
+}
+
+model SubTask {
+  id String @id @default(cuid())
+  content String
+  isMarked Boolean
+  taskId String
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
 }
