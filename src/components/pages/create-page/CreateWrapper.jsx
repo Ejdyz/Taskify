@@ -38,7 +38,7 @@ export default function CreateWrapper() {
 
     try {
       
-      const response = await fetch("/api/create/task", {
+      const response = await fetch("/api/task/create", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {

@@ -24,8 +24,6 @@ export const createTask = async (taskTitle: string, subTasks: any[]) => {
 }
 
 export const createSubTasks = async (parentTaskId: string, subTasks: any[]) => {
-    console.log(subTasks);
-    
     return subTasks.forEach(async (t) => {
         const subtask = await prisma.subTask.create({
             data: {
@@ -35,4 +33,17 @@ export const createSubTasks = async (parentTaskId: string, subTasks: any[]) => {
             }
         });
     });
+}
+
+export const getAllUserTasks = async (userId: string) => {
+    const tasks = await prisma.task.findMany({
+        where: {
+            authorId: userId
+        },
+        include: {
+            subTasks: true
+        }
+    });
+
+    return tasks
 }
