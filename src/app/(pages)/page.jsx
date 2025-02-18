@@ -1,7 +1,7 @@
 // Utils
 import { auth } from "@/lib/auth/auth"
 // Components
-import LandingPage from "@/components/pages/landing-page/LandingPage"
+import LandingPage from "@/components/pages/landing-page/LandingPage";
 import TasksWrapper from "@/components/pages/main-page/TasksWrapper";
 
 export default async function Home() {

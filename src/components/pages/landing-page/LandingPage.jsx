@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 // Components
 import { Suspense } from "react";
-import { SparklesCTALoading } from "@/components/pages/landing-page/SparklesCTA";
+import { SparklesCTALoading } from '@/components/pages/landing-page/SparklesCTA';
 import GridComponent from "@/components/pages/landing-page/GridComponent";
 
 const SparklesCTA = dynamic(() => import('@/components/pages/landing-page/SparklesCTA'), { ssr: false, loading: () => <SparklesCTALoading title={"Taskify"} /> });
