@@ -1,9 +1,12 @@
 import prisma from "./prisma/prisma";
-import { getSession } from "./session/session";
+import { getUserIdFromSessionToken } from "./user/user";
 
-export const createTask = async (taskTitle: string, subTasks: object[], authorId: string) => {
+export const createTask = async (taskTitle: string, subTasks: object[]) => {
 
-    getSession();
+    const authorId = await getUserIdFromSessionToken();
+
+    if (authorId === null)
+        return null;
     
     const task = prisma.task.create({
         data: {
