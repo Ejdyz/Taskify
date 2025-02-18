@@ -15,7 +15,7 @@ export const POST = async (request) => {
             });
         }
         
-        createTask(body.title, body.tasks, "cm7abesn70000o8e0lnoo3edw");
+        createTask(body.title, body.tasks);
 
         return NextResponse.json({
             success: true,
