@@ -16,6 +16,6 @@ export const createTask = async (taskTitle: string, subTasks: object[]) => {
             dueDate: new Date()
         }
     });
-
+    
     return task;
 }
