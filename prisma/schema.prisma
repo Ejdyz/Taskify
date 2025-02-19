@@ -95,7 +95,7 @@ model Task {
 
   author      User      @relation("TaskAuthor", fields: [authorId], references: [id], onDelete: Cascade)
   contributors User[]
-  
+
   tasks    SubTask[] @relation("TaskSubTasks")
 }
 
