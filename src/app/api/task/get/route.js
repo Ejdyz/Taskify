@@ -8,7 +8,7 @@ export const POST = async (request) => {
         if (tasks === null) {
             return NextResponse.json({
                 success: false,
-                message: "Internal server error"
+                message: "Internal server error + null"
             }, {
                 status: 500
             });
@@ -25,7 +25,7 @@ export const POST = async (request) => {
     } catch (error) {
         return NextResponse.json({
             success: false,
-            message: "Internal server error"
+            message: "Internal server error" + error
         }, {
             status: 500
         });

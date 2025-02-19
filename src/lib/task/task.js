@@ -40,8 +40,20 @@ export const getAllUserTasks = async () => {
         return null;
 
     const tasks = await prisma.task.findMany({
-        include: {
-            subTasks: true
+        select: {
+            id: true,
+            // isFavorite
+            updatedAt: true,
+            title: true,
+            tasks: true,
+            author: {
+                select: {
+                    name: true,
+                    email: true,
+                    image: true,
+                }
+            },
+            contributors: true,
         },
         where: {
             authorId: authorId
