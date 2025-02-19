@@ -2,7 +2,7 @@ import { SubTask, Task } from "@prisma/client";
 import prisma from "../prisma/prisma";
 import { getUserIdFromSessionToken } from "../user/user";
 
-export const createTask = async (taskTitle: string, subTasks: any[]) => {
+export const createTask = async (taskTitle, subTasks) => {
 
     const authorId = await getUserIdFromSessionToken();
 
@@ -23,7 +23,7 @@ export const createTask = async (taskTitle: string, subTasks: any[]) => {
     return task;
 }
 
-export const createSubTasks = async (parentTaskId: string, subTasks: any[]) => {
+export const createSubTasks = async (parentTaskId, subTasks) => {
     return subTasks.forEach(async (t) => {
         const subtask = await prisma.subTask.create({
             data: {
@@ -35,7 +35,7 @@ export const createSubTasks = async (parentTaskId: string, subTasks: any[]) => {
     });
 }
 
-export const getAllUserTasks = async (userId: string) => {
+export const getAllUserTasks = async (userId) => {
     const tasks = await prisma.task.findMany({
         where: {
             authorId: userId

@@ -6,9 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
-    "paths": {
-      "@/*": ["src/*"]
-    },
+    // "paths": {
+    //   "@/*": ["src/*"]
+    // },
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -31,7 +31,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/lib/session/session.js", "src/lib/task/task.js"  ],
   "exclude": [
     "node_modules"
   ]
