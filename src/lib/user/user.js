@@ -1,7 +1,7 @@
 import prisma from "../prisma/prisma";
 import { getSession } from "../session/session";
 
-export const getUserIdFromSessionToken = async (): Promise<string | null> => {
+export const getUserIdFromSessionToken = async ()=> {
 
     const token = (await getSession()).session;
 

@@ -31,7 +31,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/lib/session/session.js", "src/lib/task/task.js"  ],
+, "src/lib/session/session.js", "src/lib/task/task.js", "src/lib/user/user.js"  ],
   "exclude": [
     "node_modules"
   ]
