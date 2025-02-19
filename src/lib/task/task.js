@@ -53,7 +53,13 @@ export const getAllUserTasks = async () => {
                     image: true,
                 }
             },
-            contributors: true,
+            contributors: {
+                select: {
+                    name: true,
+                    email: true,
+                    image: true,
+                }
+            },
         },
         where: {
             authorId: authorId
