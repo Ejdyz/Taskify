@@ -39,6 +39,8 @@
 - Backend team is not familiar with web/backend development, but they did a great job learining new stuff.On the other hand Adam Jan (Frontend team) was more familiar with Next.js so he started and inicialized the Github Repo.
 - The basic layout of the application was made and everybody was greeted with the production pipeline. 
 
+---
+
 ### Session 2 | 18.2. 2025
 #### Work Description
 - We started working on the app and it's starting to form a shape. Backend team was focused on delivering the database scheme, there is still needed a little work, but for now its ready to use.
@@ -57,3 +59,5 @@
 #### Result
 - Backend team was getting more used to the Next.js backend development and started to making needed stuff.
 - Frontend has also started to take shape. The landing page is still under development, but the login options are implemented. 
+
+---
