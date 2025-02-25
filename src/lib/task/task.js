@@ -12,7 +12,6 @@ export const createTask = async (taskTitle, subTasks) => {
         data: {
             title: taskTitle,
             authorId: authorId,
-            dueDate: new Date()
         }
     });
 
@@ -58,15 +57,64 @@ export const getAllUserTasks = async () => {
         return null;
 
     const tasks = await prisma.task.findMany({
-        include: {
-            subTasks: true
+        select: {
+            id: true,
+            // isFavorite
+            updatedAt: true,
+            title: true,
+            tasks: true,
+            author: {
+                select: {
+                    name: true,
+                    email: true,
+                    image: true,
+                }
+            },
+            contributors: {
+                select: {
+                    name: true,
+                    email: true,
+                    image: true,
+                }
+            },
         },
         where: {
-            authorId: authorId
+            OR: [{
+                authorId: authorId,
+            }, {
+                contributors: {
+                    every: {
+                        id: authorId
+                    }
+                }
+            }]
         },
     });
 
     return tasks
+}
+
+export const addContributorToTask = async (contributor, taskId) => {
+    if (!contributor || !taskId)
+        return null;
+
+    const tasks = await prisma.task.update({
+        where: {
+            id: taskId
+        },
+        data: {
+            contributors: {
+                upsert: {
+                    create: {
+
+                    },
+                    update: {
+                        
+                    }
+                }
+            }
+        }
+    });
 }
 export const editTask = async (taskId, taskTitle, subTasks) => {
     
@@ -86,6 +134,15 @@ export const editTask = async (taskId, taskTitle, subTasks) => {
     });
 
     await createSubTasks(taskId, subTasks);
+
+    return task;
+}
+export const removeTask = async (taskId) => {
+    const task = await prisma.task.delete({
+        where: {
+            id: taskId
+        }
+    });
 
     return task;
 }
