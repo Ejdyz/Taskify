@@ -87,8 +87,7 @@ model Authenticator {
 
 model Task {
   id          String    @id @default(cuid())
-  name        String
-  description String
+  title        String   @default("Untitled")
   createdAt   DateTime  @default(now())
   dueDate     DateTime
   authorId    String
