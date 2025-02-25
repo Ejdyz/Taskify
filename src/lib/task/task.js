@@ -1,4 +1,3 @@
-import { SubTask, Task } from "@prisma/client";
 import prisma from "../prisma/prisma";
 import { getUserIdFromSessionToken } from "../user/user";
 
@@ -11,8 +10,7 @@ export const createTask = async (taskTitle, subTasks) => {
     
     const task = await prisma.task.create({
         data: {
-            name: taskTitle,
-            description: "",
+            title: taskTitle,
             authorId: authorId,
             dueDate: new Date()
         }
@@ -24,16 +22,19 @@ export const createTask = async (taskTitle, subTasks) => {
 }
 
 export const createSubTasks = async (parentTaskId, subTasks) => {
-    return subTasks.forEach(async (t) => {
-        const subtask = await prisma.subTask.create({
-            data: {
-                content: t.value,
-                isMarked: t.isMarked,
-                taskId: parentTaskId
-            }
-        });
+    console.log(subTasks);
+
+    const subtasks = await prisma.subTask.createMany({
+        data: subTasks.map(subTask => ({
+            content: subTask.value,
+            isMarked: subTask.isMarked,
+            taskId: parentTaskId,
+        }))
     });
-}
+
+    return subtasks;
+};
+
 
 export const getAllUserTasks = async () => {
 
