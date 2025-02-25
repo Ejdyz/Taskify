@@ -16,3 +16,31 @@ export function getProviderIcon(providerId, props) {
       break;
   }
 }
+
+/**
+ * Formats (primarily ISO 8601) date string to Czech date and time format with Czech timezone.
+ * 
+ * @param {string} isoDateStr - The ISO date string to be formatted.
+ * @returns {string} The formatted date and time string in Czech format.
+ */
+export const formatDateToCzech = (isoDateStr, options = undefined) => {
+  const date = new Date(isoDateStr)
+
+  if (Number.isNaN(date)) {
+      return "Invalid date"
+  }
+
+  const formatterOptions = options || {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      timeZone: "Europe/Prague",
+  }
+
+  const formatter = new Intl.DateTimeFormat("cs-CZ", formatterOptions)
+  return formatter.format(date)
+}
+
