@@ -94,7 +94,7 @@ model Task {
   authorId    String
 
   author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  subTasks    SubTask[] @relation("TaskSubTasks")  // Opravený název relace
+  subTasks    SubTask[] @relation("TaskSubTasks")
 }
 
 model SubTask {
@@ -103,5 +103,5 @@ model SubTask {
   isMarked  Boolean
   taskId    String
 
-  task      Task     @relation("TaskSubTasks", fields: [taskId], references: [id], onDelete: Cascade)  // Opravená relace zpětně
+  task      Task     @relation("TaskSubTasks", fields: [taskId], references: [id], onDelete: Cascade)
 }
