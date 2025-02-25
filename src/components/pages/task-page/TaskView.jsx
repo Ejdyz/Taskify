@@ -16,10 +16,10 @@ export default function TaskView({tasks}) {
               defaultChecked={task.isMarked}
               isSelected={task.isMarked}
               onChange={(e) => handleCheckboxChange(task.id, e)}
-              className={"text-md w-1/3 " + (task.isMarked && task.value.trim() !== ""? 'line-through' : '')}
+              className={"text-md w-1/3 " + (task.isMarked && task.content.trim() !== ""? 'line-through' : '')}
             >
               <pre className='font-sans font-medium w-96 whitespace-pre-wrap break-words  '>
-                {task.value}
+                {task.content}
               </pre>
             </Checkbox>
           </div>
