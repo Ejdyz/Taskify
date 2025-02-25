@@ -1,6 +1,8 @@
 "use client"
 // Hooks
 import { useState, useRef } from "react";
+import { addToast } from "@heroui/toast";
+import { useRouter } from "next/navigation";
 // Components
 import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/tabs";
@@ -18,8 +20,9 @@ export default function TaskWrapper({ task }) {
 
   const startingTasks = task.tasks.map((task, index) => ({ id: index, ...task }))
   const tasksRef = useRef(startingTasks);
+  const router = useRouter();
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(task.title || "Untitled");
   const [loading, setLoading] = useState(false);
 
   function handleUpdateTitle(e) {
@@ -30,8 +33,31 @@ export default function TaskWrapper({ task }) {
     tasksRef.current = tasks;
   }
 
-  function handleTaskEditSubmit () {
-    console.log("sent")
+  async function handleTaskEditSubmit () {
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/task/edit`, {
+        method: 'POST',
+        body: JSON.stringify({ 
+          id: task.id,
+          title,
+          tasks: tasksRef.current
+        })
+      })
+
+      const res = await response.json()
+
+      if (res.success) {
+        console.log("Task updated")
+      }else{
+        addToast({title: res.message, color: 'danger'})
+      }
+      setLoading(false)
+      router.refresh()
+
+    } catch (error) {
+      addToast({title: "An error occurred", color: 'danger'})
+    }
   }
 
   function handleTabChange(tab) {
@@ -40,6 +66,7 @@ export default function TaskWrapper({ task }) {
     }
     setMode(tab);
   }
+
   return (
     <div className="w-full h-screen dotted-vignette fixed overflow-auto">
       <div className="flex flex-col items-center gap-4 w-full mb-20">
@@ -49,6 +76,8 @@ export default function TaskWrapper({ task }) {
           </Button>
           <Input
             placeholder="Untitled"
+            value={title}
+            onChange={handleUpdateTitle}
             variant="bordered"
             isReadOnly={mode === "view"}
             className="w-1/3 text-center"
@@ -72,6 +101,8 @@ export default function TaskWrapper({ task }) {
               <MultipleUsersIcon />
             </AddContributorsModal>
             <RemoveTaskModal
+              taskId={task.id}
+              redirect="/"
               variant="flat"
               isIconOnly
               color="danger"
