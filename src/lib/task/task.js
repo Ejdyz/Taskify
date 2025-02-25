@@ -21,11 +21,9 @@ export const createTask = async (taskTitle, subTasks) => {
 }
 
 export const createSubTasks = async (parentTaskId, subTasks) => {
-    console.log(subTasks);
-
     const subtasks = await prisma.subTask.createMany({
         data: subTasks.map(subTask => ({
-            content: subTask.value,
+            content: subTask.content,
             isMarked: subTask.isMarked,
             taskId: parentTaskId,
         }))
