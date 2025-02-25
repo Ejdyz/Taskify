@@ -22,13 +22,13 @@ export default function GoalsEditForm({ startingTasks, handleUpdateTaskRef }) {
   };
 
   const handleTaskValueChange = (taskId, e) => {
-    handleTaskChange(taskId, "value", e.target.value);
+    handleTaskChange(taskId, "content", e.target.value);
   };
   
   function handleAddTask() {
     setTasks((prev) => [
       ...prev,
-      { id: Date.now(), value: "", isMarked: false }
+      { id: Date.now(), content: "", isMarked: false }
     ]);
   };
 
@@ -58,9 +58,9 @@ export default function GoalsEditForm({ startingTasks, handleUpdateTaskRef }) {
               onClear={() => handleTaskValueChange(task.id, { target: { value: "" } })}
               minRows={1}
               placeholder={"Task " + (index + 1)}
-              className={task.isMarked && task.value.trim() !== ""? 'line-through' : ''}
+              className={task.isMarked && task.content.trim() !== ""? 'line-through' : ''}
               classNames={{input: "text-md"}}
-              value={task.value}
+              value={task.content}
               onChange={(e) => handleTaskValueChange(task.id, e)}
               />
             <Button

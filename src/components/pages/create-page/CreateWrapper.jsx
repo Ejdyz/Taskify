@@ -2,6 +2,7 @@
 // Hooks
 import { useRouter } from "next/navigation";
 import { useState, useRef } from "react";
+import { addToast } from "@heroui/toast"
 // Components
 import MenuBar from "@/components/navigation/MenuBar";
 import GoalsEditForm from "@/components/lib/GoalsEditForm";
@@ -12,7 +13,7 @@ import { TickIcon, ArrowLeftIcon } from "@/components/icons/Icons";
 
 export default function CreateWrapper() {
   const router = useRouter();
-  const startingTasks = [{ id: 1, value: "", isMarked: false },{ id: 2, value: "", isMarked: false },{ id: 3, value: "", isMarked: false }]
+  const startingTasks = [{ id: 1, content: "", isMarked: false },{ id: 2, content: "", isMarked: false },{ id: 3, content: "", isMarked: false }]
   const tasksRef = useRef(startingTasks);
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,15 +27,15 @@ export default function CreateWrapper() {
   }
 
   async function handleSubmit (tasks) {      
-
-    if(tasks.some((task) => task.value.trim() === "")){
-      alert("Please fill all the tasks");
+    if(tasks.some((task) => task.content.trim() === "")){
+      addToast({title:"Please fill all the tasks", type:"error"});
       return;
     }
     
     setLoading(true);
 
-    const data = { title: title || "Untitled", tasks };
+    const taskTitle = title?.trim() === "" || !title? "Untitled" : title
+    const data = { title: taskTitle, tasks };
 
     try {
       
