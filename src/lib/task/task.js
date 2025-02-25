@@ -27,8 +27,20 @@ export const getTaskInfo = async (taskId) => {
             createdAt: true,
             title: true,
             subtasks: true,
-            author: true,
-            contributors: true,
+            author: {
+                select: {
+                    name: true,
+                    email: true,
+                    image: true
+                }
+            },
+            contributors: {
+                select: {
+                    name: true,
+                    email: true,
+                    image: true
+                }
+            },
         },
         where: {
             id: taskId
@@ -39,7 +51,7 @@ export const getTaskInfo = async (taskId) => {
 export const createSubTasks = async (parentTaskId, subTasks) => {
     const subtasks = await prisma.subTask.createMany({
         data: subTasks.map(subTask => ({
-            content: subTask.value,
+            content: subTask.content,
             isMarked: subTask.isMarked,
             taskId: parentTaskId,
         }))
