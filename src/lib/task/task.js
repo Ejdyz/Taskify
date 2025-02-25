@@ -62,9 +62,40 @@ export const getAllUserTasks = async () => {
             },
         },
         where: {
-            authorId: authorId
+            OR: [{
+                authorId: authorId,
+            }, {
+                contributors: {
+                    every: {
+                        id: authorId
+                    }
+                }
+            }]
         },
     });
 
     return tasks
+}
+
+export const addContributorToTask = async (contributor, taskId) => {
+    if (!contributor || !taskId)
+        return null;
+
+    const tasks = await prisma.task.update({
+        where: {
+            id: taskId
+        },
+        data: {
+            contributors: {
+                upsert: {
+                    create: {
+
+                    },
+                    update: {
+                        
+                    }
+                }
+            }
+        }
+    });
 }
