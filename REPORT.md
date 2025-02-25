@@ -61,3 +61,23 @@
 - Frontend has also started to take shape. The landing page is still under development, but the login options are implemented. 
 
 ---
+
+### Session 3 | 25.2. 2025
+#### Work Description
+- Backend started delivering first API routes and SSR functions for fronted to implement.
+- **Michal** was working on API Route for editing ([issue #7](https://github.com/Ejdyz/Taskify/issues/7)) and removing tasks ([issue #13](https://github.com/Ejdyz/Taskify/issues/13)), he delivered those with some issues, but after revision all was done.
+- **Petr** was working on SSR functions for retrieving data to frontend, specificaly function for retrieving data about task ([issue #15](https://github.com/Ejdyz/Taskify/issues/15)) and function for retrieving all user's tasks ([issue #14](https://github.com/Ejdyz/Taskify/issues/14)), both functions were delivered. He also made API route for creating task ([issue #6](https://github.com/Ejdyz/Taskify/issues/6)) that was also delivered.
+- **Jan** was implementing SSR functions and API route calls on frontend, and finilize creating, removing and editing tasks.
+  
+#### Team report
+| Name\Task    | Frontend implementation | Edit/remove API routes | SSR functions, Create API route | Suggested Mark |
+|--------------|-------------------------|------------------------|---------------------------------|----------------|
+| Adam Jan     | ✅                      | -                      |                                 | **1**          |
+| Novák Michal | -                       | ✅                     |                                 | **1**          |
+| Polák Petr   | -                       | -                      | ✅                              | **1**          |
+
+#### Result
+- Backend delivered frist API endpoints and SSR functions.
+- Frontend made main page for user and implemented all API routes and SSR functions. 
+
+---
