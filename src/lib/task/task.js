@@ -52,3 +52,24 @@ export const getAllUserTasks = async () => {
 
     return tasks
 }
+export const editTask = async (taskId, taskTitle, subTasks) => {
+    
+    const task = await prisma.task.updateMany({
+        where: {
+            id: taskId
+        },
+        data: {
+            name: taskTitle
+        }
+    });
+
+    await prisma.subTask.deleteMany({
+        where: {
+            taskId: taskId
+        }
+    });
+
+    await createSubTasks(taskId, subTasks);
+
+    return task;
+}
