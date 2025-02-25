@@ -21,16 +21,19 @@ export const createTask = async (taskTitle, subTasks) => {
 }
 
 export const createSubTasks = async (parentTaskId, subTasks) => {
-    return subTasks.forEach(async (t) => {
-        const subtask = await prisma.subTask.create({
-            data: {
-                content: t.value,
-                isMarked: t.isMarked,
-                taskId: parentTaskId
-            }
-        });
+    console.log(subTasks);
+
+    const subtasks = await prisma.subTask.createMany({
+        data: subTasks.map(subTask => ({
+            content: subTask.value,
+            isMarked: subTask.isMarked,
+            taskId: parentTaskId,
+        }))
     });
-}
+
+    return subtasks;
+};
+
 
 export const getAllUserTasks = async () => {
 
@@ -98,4 +101,34 @@ export const addContributorToTask = async (contributor, taskId) => {
             }
         }
     });
+}
+export const editTask = async (taskId, taskTitle, subTasks) => {
+    
+    const task = await prisma.task.updateMany({
+        where: {
+            id: taskId
+        },
+        data: {
+            name: taskTitle
+        }
+    });
+
+    await prisma.subTask.deleteMany({
+        where: {
+            taskId: taskId
+        }
+    });
+
+    await createSubTasks(taskId, subTasks);
+
+    return task;
+}
+export const removeTask = async (taskId) => {
+    const task = await prisma.task.delete({
+        where: {
+            id: taskId
+        }
+    });
+
+    return task;
 }
