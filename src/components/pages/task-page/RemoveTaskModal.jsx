@@ -1,6 +1,9 @@
 "use client"
 // Hooks
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { addToast } from '@heroui/toast';
+
 // Components
 import { Button } from '@heroui/button'
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/modal'
@@ -10,15 +13,32 @@ import { TrashIcon } from '@/components/icons/Icons';
 export default function RemoveTaskModal(props) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
-  function handleRemove() {
-    console.log(props.taskId)
+  async function handleRemove() {
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
+    const response = await fetch(`/api/task/remove`, {
+      method: 'POST',
+      body: JSON.stringify({ 
+        taskId: props.taskId
+      })
+    })
+    
+    const res = await response.json()
+    if (res.success) {
+      addToast({title: "Task removed", color: 'success'})
       onOpenChange()
-    }, 1000)
-    // Add contributor
+      if (props.redirect){
+        router.push('/')
+      }else{
+        router.refresh()
+      }
+    }else{
+      addToast({title: res.message, color: 'danger'})
+    }
+    
+
+    setLoading(false)
   }
 
   return (
