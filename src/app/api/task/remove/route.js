@@ -1,10 +1,12 @@
-import { editTask } from "@/lib/task/task";
-import { NextResponse } from "next/server";
+import { removeTask } from "@/lib/task/task";
+import { NextServer } from "next/dist/server/next";
 
 export const POST = async (request) => {
     try {
+
         const body = await request.json();
-        if (!(body.title) || body.title.trim() == "" || !(body.tasks)) {
+        
+        if (!(body.taskId)) {
             return NextResponse.json({
                 success: false,
                 message: error instanceof SyntaxError ? "JSON syntax error" : (error.details ? error.details[0].message : "An unknown error occurred")
@@ -13,18 +15,16 @@ export const POST = async (request) => {
             });
         }
         
-        editTask(body.id, body.title, body.tasks);
+        removeTask(body.taskId);
 
         return NextResponse.json({
             success: true,
-            message: "Successfully edited a task!"
+            message: "Successfully deleted a task!"
         }, {
             status: 200
         });
 
-
     } catch (error) {
-        
         return NextResponse.json({
             success: false,
             message: "Internal server error"
@@ -32,13 +32,11 @@ export const POST = async (request) => {
             status: 500
         });
     }
+        
     return NextResponse.json({
         success: false,
         message: "Internal server error"
     }, {
         status: 500
-    });    
+    });
 }
-
-
-
