@@ -14,7 +14,7 @@ export const POST = async (request) => {
         }   
         const body = await request.json();
         
-        if (!(body.taskId)) {
+        if (!(body.taskId))  {
             return NextResponse.json({
                 success: false,
                 message: error instanceof SyntaxError ? "JSON syntax error" : (error.details ? error.details[0].message : "An unknown error occurred")
@@ -22,7 +22,14 @@ export const POST = async (request) => {
                 status: 400,
             });
         }
-        
+        if (loggedUser !== task.authorId) {
+            return NextResponse.json({
+                success: false,
+                message: "Forbidden: You are not the author of this task"
+            }, {
+                status: 403
+            });
+        }
         removeTask(body.taskId);
 
         return NextResponse.json({
