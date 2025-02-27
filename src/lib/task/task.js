@@ -28,12 +28,14 @@ export const getTaskInfo = async (taskId, userId) => {
             title: true,
             tasks: { 
                 select: {
+                    id: true,
                     content: true,
                     isMarked: true,
                 }
             },
             author: {
                 select: {
+                    id: true,
                     name: true,
                     email: true,
                     image: true
@@ -41,6 +43,7 @@ export const getTaskInfo = async (taskId, userId) => {
             },
             contributors: {
                 select: {
+                    id: true,
                     name: true,
                     email: true,
                     image: true
@@ -105,12 +108,14 @@ export const getAllUserTasks = async (userId) => {
             title: true,
             tasks: {
                 select: {
+                    id: true,
                     content: true,
                     isMarked: true,
                 }
             },
             author: {
                 select: {
+                    id: true,
                     name: true,
                     email: true,
                     image: true,
@@ -118,6 +123,7 @@ export const getAllUserTasks = async (userId) => {
             },
             contributors: {
                 select: {
+                    id: true,
                     name: true,
                     email: true,
                     image: true,

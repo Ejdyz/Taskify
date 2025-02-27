@@ -20,9 +20,12 @@ export default function RemoveTaskModal(props) {
     const response = await fetch(`/api/task/remove`, {
       method: 'POST',
       body: JSON.stringify({ 
-        taskId: props.taskId
+        taskId: props.taskId,
+        authorId: props.authorId,
       })
     })
+
+    
     
     const res = await response.json()
     if (res.success) {

@@ -1,20 +1,16 @@
 import { removeTask } from "@/lib/task/task";
 import { NextResponse } from "next/server";
+import { getUserIdFromSessionToken } from "@/lib/user/user";
+import { auth } from "@/lib/auth/auth";
+
 
 export const POST = async (request) => {
     try {
-        const loggedUser = await getUserIdFromSessionToken();
-        if (!loggedUser) {
-            return NextResponse.json({
-                success: false,
-                message: "Unauthorized: User not logged in"
-            }, {
-                status: 401
-            });
-        }   
+    
         const body = await request.json();
-        
-        if (!(body.taskId))  {
+        const session = await auth();
+
+        if (!(body.taskId) || !(body.authorId))  {
             return NextResponse.json({
                 success: false,
                 message: error instanceof SyntaxError ? "JSON syntax error" : (error.details ? error.details[0].message : "An unknown error occurred")
@@ -22,7 +18,17 @@ export const POST = async (request) => {
                 status: 400,
             });
         }
-        if (loggedUser !== task.authorId) {
+
+        if (!session || !session.user) {
+            return NextResponse.json({
+                success: false,
+                message: "Unauthorized: User not logged in"
+            }, {
+                status: 401
+            });
+        }
+
+        if (session.user.id !== body.authorId) {
             return NextResponse.json({
                 success: false,
                 message: "Forbidden: You are not the author of this task"
@@ -30,6 +36,8 @@ export const POST = async (request) => {
                 status: 403
             });
         }
+        
+
         removeTask(body.taskId);
 
         return NextResponse.json({
@@ -40,7 +48,9 @@ export const POST = async (request) => {
         });
 
     } catch (error) {
+        console.error(error);
         return NextResponse.json({
+            
             success: false,
             message: "Internal server error"
         }, {

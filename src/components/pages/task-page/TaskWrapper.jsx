@@ -16,6 +16,7 @@ import RemoveTaskModal from "./RemoveTaskModal";
 import { TrashIcon, ArrowLeftIcon, MultipleUsersIcon, TaskListIcon, PenIcon } from "@/components/icons/Icons";
 
 export default function TaskWrapper({ task }) {
+  console.log(task);
   const [mode, setMode] = useState("view");
 
   const startingTasks = task.tasks.map((task, index) => ({ id: index, ...task }))
@@ -102,6 +103,7 @@ export default function TaskWrapper({ task }) {
             </AddContributorsModal>
             <RemoveTaskModal
               taskId={task.id}
+              authorId={task.author.id}
               redirect="/"
               variant="flat"
               isIconOnly

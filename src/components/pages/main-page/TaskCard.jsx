@@ -46,7 +46,9 @@ const TodoListCard = ({ list }) => {
                   : <HeartAddOutlinedIcon />
                 }
               </Button>
-              <RemoveTaskModal taskId={list.id}
+              <RemoveTaskModal 
+                taskId={list.id}
+                authorId={list.author.id}
                 variant="light"
                 isIconOnly
                 size="sm"
