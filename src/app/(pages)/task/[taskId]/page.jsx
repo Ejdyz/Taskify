@@ -3,7 +3,9 @@ import { notFound } from 'next/navigation'
 // Components
 import TaskWrapper from '@/components/pages/task-page/TaskWrapper';
 import { getTaskInfo } from "@/lib/task/task"
+import { auth } from '@/lib/auth/auth';
 export default async function page(props) {
+  const session = await auth();
   const params = await props.params;
   const taskId = params.taskId;
 
@@ -13,7 +15,7 @@ export default async function page(props) {
   }
 
   // Fetch task data
-  const task = await getTaskInfo(taskId);
+  const task = await getTaskInfo(taskId, session.user.id);
 
   if (!task) {
     notFound();
