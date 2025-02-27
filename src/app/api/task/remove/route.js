@@ -1,9 +1,17 @@
 import { removeTask } from "@/lib/task/task";
-import { NextServer } from "next/dist/server/next";
+import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
     try {
-
+        const loggedUser = await getUserIdFromSessionToken();
+        if (!loggedUser) {
+            return NextResponse.json({
+                success: false,
+                message: "Unauthorized: User not logged in"
+            }, {
+                status: 401
+            });
+        }   
         const body = await request.json();
         
         if (!(body.taskId)) {
