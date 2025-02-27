@@ -60,9 +60,7 @@ export const getTaskInfo = async (taskId, userId) => {
             }]
         }
     });
-
-    console.log(info);
-
+    
     if (info === null)
         return null;
 
