@@ -67,6 +67,17 @@ export const getAllUserTasks = async (userId) => {
         return null;
 
     const tasks = await prisma.task.findMany({
+        where: {
+            OR: [{
+                authorId: userId,
+            }, {
+                contributors: {
+                    some: {
+                        id: userId
+                    }
+                }
+            }]
+        },
         select: {
             id: true,
             // isFavorite
@@ -89,17 +100,9 @@ export const getAllUserTasks = async (userId) => {
                 }
             },
         },
-        where: {
-            OR: [{
-                authorId: userId,
-            }, {
-                contributors: {
-                    some: {
-                        id: userId
-                    }
-                }
-            }]
-        },
+        orderBy: {
+            createdAt: 'desc',
+        }
     });
 
     return tasks
