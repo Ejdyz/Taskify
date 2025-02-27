@@ -14,7 +14,7 @@ export default async function Home() {
     );
   }
 
-  const lists = await getAllUserTasks()
+  const lists = await getAllUserTasks(session.user.id)
   
   return (
     <TasksWrapper lists={lists} />

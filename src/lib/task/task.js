@@ -61,17 +61,16 @@ export const createSubTasks = async (parentTaskId, subTasks) => {
 };
 
 
-export const getAllUserTasks = async () => {
+export const getAllUserTasks = async (userId) => {
 
-    const authorId = await getUserIdFromSessionToken();
-
-    if (authorId === null)
+    if (userId === null)
         return null;
 
     const tasks = await prisma.task.findMany({
         select: {
             id: true,
             // isFavorite
+            createdAt: true,
             updatedAt: true,
             title: true,
             tasks: true,
@@ -92,11 +91,11 @@ export const getAllUserTasks = async () => {
         },
         where: {
             OR: [{
-                authorId: authorId,
+                authorId: userId,
             }, {
                 contributors: {
-                    every: {
-                        id: authorId
+                    some: {
+                        id: userId
                     }
                 }
             }]
