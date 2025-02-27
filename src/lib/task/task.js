@@ -20,13 +20,18 @@ export const createTask = async (taskTitle, subTasks) => {
     return task;
 }
 
-export const getTaskInfo = async (taskId) => {
+export const getTaskInfo = async (taskId, userId) => {
     const info = await prisma.task.findFirst({
         select: {
             id: true,
             createdAt: true,
             title: true,
-            subtasks: true,
+            tasks: { 
+                select: {
+                    content: true,
+                    isMarked: true,
+                }
+            },
             author: {
                 select: {
                     name: true,
@@ -43,9 +48,25 @@ export const getTaskInfo = async (taskId) => {
             },
         },
         where: {
-            id: taskId
+            id: taskId,
+            OR: [ {
+                authorId: userId
+            }, {
+                contributors: {
+                    some: {
+                        id: userId,
+                    }
+                }
+            }]
         }
     });
+
+    console.log(info);
+
+    if (info === null)
+        return null;
+
+    return info;
 }
 
 export const createSubTasks = async (parentTaskId, subTasks) => {
@@ -84,7 +105,12 @@ export const getAllUserTasks = async (userId) => {
             createdAt: true,
             updatedAt: true,
             title: true,
-            tasks: true,
+            tasks: {
+                select: {
+                    content: true,
+                    isMarked: true,
+                }
+            },
             author: {
                 select: {
                     name: true,

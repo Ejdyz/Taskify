@@ -16,6 +16,7 @@ import RemoveTaskModal from "./RemoveTaskModal";
 import { TrashIcon, ArrowLeftIcon, MultipleUsersIcon, TaskListIcon, PenIcon } from "@/components/icons/Icons";
 
 export default function TaskWrapper({ task }) {
+  console.log(task);
   const [mode, setMode] = useState("view");
 
   const startingTasks = task.tasks.map((task, index) => ({ id: index, ...task }))
