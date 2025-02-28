@@ -5,6 +5,13 @@ import LandingPage from "@/components/pages/landing-page/LandingPage";
 import TasksWrapper from "@/components/pages/main-page/TasksWrapper";
 import { getAllUserTasks } from "@/lib/task/task"
 
+
+export const metadata = {
+  title: "Home",
+  description: "Home page",
+  keywords: "home, page, tasks"
+}
+
 export default async function Home() {
   const session = await auth();
 
