@@ -1,13 +1,15 @@
-import { removeTask } from "@/lib/task/task";
+import { removeTask, isUserTaskAuthorByUserId } from "@/lib/task/task";
 import { NextResponse } from "next/server";
-import { getUserIdFromSessionToken } from "@/lib/user/user";
 import { auth } from "@/lib/auth/auth";
 
 
 export const POST = async (request) => {
     try {
+
     
         const body = await request.json();
+        await isUserTaskAuthorByUserId(body.authorId, body.taskId);
+
         const session = await auth();
 
         if (!(body.taskId) || !(body.authorId))  {
@@ -37,8 +39,7 @@ export const POST = async (request) => {
             });
         }
         
-
-        removeTask(body.taskId);
+        //await removeTask(body.taskId);
 
         return NextResponse.json({
             success: true,

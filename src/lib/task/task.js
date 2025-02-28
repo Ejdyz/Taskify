@@ -191,3 +191,16 @@ export const removeTask = async (taskId) => {
 
     return task;
 }
+
+export async function isUserTaskAuthorByUserId(userId, taskId)
+{
+    const author = await prisma.task.findFirst({
+        where: {
+            id: taskId,
+        },
+        select: {
+            authorId: true
+        }
+    })
+    return author.authorId === userId;
+}

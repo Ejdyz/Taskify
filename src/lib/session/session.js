@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import prisma from "../prisma/prisma";
 
 export const getSession = async () => {
     
@@ -6,4 +7,6 @@ export const getSession = async () => {
     const cookieToken = cookieStore.get("authjs.session-token")?.value ?? null;
 
     return { session: cookieToken };
+
 }
+
