@@ -82,7 +82,6 @@ export const createSubTasks = async (parentTaskId, subTasks) => {
     return subtasks;
 };
 
-
 export const getAllUserTasks = async (userId) => {
 
     if (userId === null)
@@ -160,6 +159,7 @@ export const addContributorToTask = async (contributor, taskId) => {
         }
     });
 }
+
 export const editTask = async (taskId, taskTitle, subTasks) => {
     
     const task = await prisma.task.updateMany({
@@ -181,6 +181,7 @@ export const editTask = async (taskId, taskTitle, subTasks) => {
 
     return task;
 }
+
 export const removeTask = async (taskId) => {
     
     const task = await prisma.task.delete({
@@ -215,6 +216,21 @@ export async function isUserSubTaskAuthorByUserId(userId, subtaskId) {
         }
     })
     return subtask.task.authorId === userId;
+}
+
+export async function isUserAuthorOrContributorOfTaskByTaskId(userId, taskId) {
+    const author = await prisma.task.findFirst({
+        select: {
+            authorId: true
+        },
+        where: {
+            id: taskId
+        }
+    });
+
+    console.log(author);
+
+    return author;
 }
 
 export const markSubTask = async (subtaskId, newState) => {

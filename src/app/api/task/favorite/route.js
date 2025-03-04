@@ -1,4 +1,4 @@
-import { isUserSubTaskAuthorByUserId, markSubTask } from "@/lib/task/task";
+import { favoriteTask, isUserAuthorOrContributorOfTaskByTaskId } from "@/lib/task/task";
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth/auth";
 
@@ -8,7 +8,7 @@ export const POST = async (request) => {
 
         const body = await request.json();
 
-        if (!(body.goalId) || body.isMarked === undefined)  {
+        if (!(body.taskId) || body.isFavorite === undefined || body.isFavorite === null || typeof body.isFavorite !== "boolean" || typeof body.taskId !== "string")  {
             return NextResponse.json({
                 success: false,
                 message: "Invalid request body",
@@ -46,10 +46,10 @@ export const POST = async (request) => {
             });
         }
         
-        if (await markSubTask(body.goalId, body.isMarked)){
+        if (await favoriteTask(body.taskId, session.user.id, body.isFavorite)){
             return NextResponse.json({
                 success: true,
-                message: "Successfully marked a goal!"
+                message: "Successfully added the task to favorites!"
             }, {
                 status: 200
             });
@@ -58,7 +58,7 @@ export const POST = async (request) => {
             return NextResponse.json({
             
                 success: false,
-                message: "Internal server error"
+                message: "Something went wrong while favoriting a task!"
             }, {
                 status: 500
             });
