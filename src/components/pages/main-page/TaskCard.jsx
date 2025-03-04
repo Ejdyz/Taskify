@@ -48,7 +48,6 @@ const TodoListCard = ({ list }) => {
               </Button>
               <RemoveTaskModal 
                 taskId={list.id}
-                authorId={list.author.id}
                 variant="light"
                 isIconOnly
                 size="sm"

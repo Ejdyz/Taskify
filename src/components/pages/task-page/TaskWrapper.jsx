@@ -103,7 +103,6 @@ export default function TaskWrapper({ task }) {
             </AddContributorsModal>
             <RemoveTaskModal
               taskId={task.id}
-              authorId={task.author.id}
               redirect="/"
               variant="flat"
               isIconOnly

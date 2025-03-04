@@ -21,7 +21,6 @@ export default function RemoveTaskModal(props) {
       method: 'POST',
       body: JSON.stringify({ 
         taskId: props.taskId,
-        authorId: props.authorId,
       })
     })
 
