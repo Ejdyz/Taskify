@@ -204,3 +204,39 @@ export async function isUserTaskAuthorByUserId(userId, taskId)
     })
     return author.authorId === userId;
 }
+
+export async function isUserSubTaskAuthorByUserId(userId, subtaskId) {
+    const subtask = await prisma.subTask.findFirst({
+        where: {
+            id: subtaskId,
+        },
+        select: {
+            task: true
+        }
+    })
+    return subtask.task.authorId === userId;
+}
+
+export const markSubTask = async (subtaskId, newState) => {
+    const subtask = await prisma.subTask.findUnique({
+        where: {
+            id: subtaskId
+        }
+    });
+
+    if (subtask)
+    {
+        const updatedSubtask = await prisma.subTask.update({
+            where: {
+                id: subtaskId,
+            },
+            data: {
+                isMarked: true,
+            }
+        });
+
+        return true;
+    }
+
+    return false;
+}
