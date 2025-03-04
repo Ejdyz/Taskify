@@ -25,6 +25,8 @@ model User {
   updatedAt DateTime @updatedAt
   tasks Task[] @relation("TaskAuthor")
   contributedTasks Task[]
+
+  favoriteTasks Task[] @relation("FavoriteTasks")
 }
  
 model Account {
@@ -97,6 +99,8 @@ model Task {
   contributors User[]
 
   tasks    SubTask[] @relation("TaskSubTasks")
+
+  favoritedBy User[] @relation("FavoriteTasks")
 }
 
 model SubTask {

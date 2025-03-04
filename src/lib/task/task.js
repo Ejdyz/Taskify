@@ -240,3 +240,42 @@ export const markSubTask = async (subtaskId, newState) => {
 
     return false;
 }
+
+export const favoriteTask = async (taskId, favoritedByUserId, newState) => {
+    if (newState === true) {
+        const updatedTask = await prisma.task.update({
+            where: {
+                id: taskId
+            },
+            data: {
+                favoritedBy: {
+                    connect: {
+                        id: favoritedByUserId
+                    }
+                }
+            }
+        });
+
+        return updatedTask !== null;
+    }
+    else if (newState === false) {
+        const updatedTask = await prisma.task.update({
+            where: {
+                id: taskId
+            },
+            data: {
+                favoritedBy: {
+                    disconnect: {
+                        id: favoritedByUserId
+                    }
+                }
+            }
+        });
+
+        return updatedTask !== null;
+    }
+    else
+    {
+        console.log("error while favoriting task: invalid state")
+    }
+}

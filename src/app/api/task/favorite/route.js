@@ -5,9 +5,10 @@ import { auth } from "@/lib/auth/auth";
 
 export const POST = async (request) => {
     try {
+
         const body = await request.json();
 
-        if (!(body.goalId) || body.isMarked === undefined || body.isMarked === null || typeof body.isMarked !== "boolean" || typeof body.goalId !== "string")  {
+        if (!(body.goalId) || body.isMarked === undefined)  {
             return NextResponse.json({
                 success: false,
                 message: "Invalid request body",
