@@ -6,22 +6,20 @@ import { auth } from "@/lib/auth/auth";
 export const POST = async (request) => {
     try {
 
-    
         const body = await request.json();
-        await isUserTaskAuthorByUserId(body.authorId, body.taskId);
 
-        const session = await auth();
-
-        if (!(body.taskId) || !(body.authorId))  {
+        if (!(body.taskId)) {
             return NextResponse.json({
                 success: false,
-                message: error instanceof SyntaxError ? "JSON syntax error" : (error.details ? error.details[0].message : "An unknown error occurred")
+                message: "Invalid request body"
             }, {
                 status: 400,
             });
         }
 
-        if (!session || !session.user) {
+        const session = await auth();
+
+        if (!session) {
             return NextResponse.json({
                 success: false,
                 message: "Unauthorized: User not logged in"
@@ -30,16 +28,17 @@ export const POST = async (request) => {
             });
         }
 
-        if (session.user.id !== body.authorId) {
+        const IsUserAuthor = await isUserTaskAuthorByUserId(session.user.id, body.taskId);
+        if (!IsUserAuthor) {
             return NextResponse.json({
                 success: false,
-                message: "Forbidden: You are not the author of this task"
+                message: "Insufficient permissions for this operation"
             }, {
-                status: 403
-            });
+                status: 401
+            })
         }
-        
-        //await removeTask(body.taskId);
+
+        await removeTask(body.taskId);
 
         return NextResponse.json({
             success: true,
@@ -51,18 +50,10 @@ export const POST = async (request) => {
     } catch (error) {
         console.error(error);
         return NextResponse.json({
-            
             success: false,
             message: "Internal server error"
         }, {
             status: 500
         });
     }
-        
-    return NextResponse.json({
-        success: false,
-        message: "Internal server error"
-    }, {
-        status: 500
-    });
 }
