@@ -81,3 +81,21 @@
 - Frontend made main page for user and implemented all API routes and SSR functions. 
 
 ---
+
+### Session 4 | 27.2. 2025
+#### Work Description
+- Backend was delivering API routes and SSR functions for favouriting tasks and enhancing security.
+- **Michal** was enhancing the code and implementing new authentication method on API routes ([Issue 7](https://github.com/Ejdyz/Taskify/issues/7) & [Issue 13](https://github.com/Ejdyz/Taskify/issues/13)).
+- **Petr** was working on new function, favoriting tasks, API routes and SSR founctions ([Issue 10](https://github.com/Ejdyz/Taskify/issues/10)).
+- **Jan** was implementing favoriting tasks on frontend and creating task page ([Issue 3](https://github.com/Ejdyz/Taskify/issues/3)).
+  
+#### Team report
+| Name\Task    | Task page | Enhancing API routes security | Favoriting tasks API   | Suggested Mark |
+|--------------|-----------|-------------------------------|------------------------|----------------|
+| Adam Jan     | ✅        | -                             |                        | **1**          |
+| Novák Michal | -         | ✅                            |                        | **1**          |
+| Polák Petr   | -         | -                             | ✅                     | **1**          |
+
+#### Result
+- Backend enhanced security on API routes and delivered new function.
+- Frontend implemented favoriting task and made task page. 
