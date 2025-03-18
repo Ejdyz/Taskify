@@ -27,22 +27,12 @@ export const POST = async (request) => {
                 status: 401
             });
         }
-
-        if (!(await isUserSubTaskAuthorByUserId(session.user.id, body.goalId))) {
+         if (false) { //!(await isUserAuthorOrContributorOfTaskByTaskId(session.user.id, body.taskId)) || false) {
             return NextResponse.json({
                 success: false,
                 message: "Insufficient permissions for this operation!"
             }, {
                 status: 401
-            });
-        }
-
-        if (session.user.id !== body.authorId) {
-            return NextResponse.json({
-                success: false,
-                message: "Forbidden: You are not the author of this task"
-            }, {
-                status: 403
             });
         }
         

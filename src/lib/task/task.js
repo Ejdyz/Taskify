@@ -219,18 +219,24 @@ export async function isUserSubTaskAuthorByUserId(userId, subtaskId) {
 }
 
 export async function isUserAuthorOrContributorOfTaskByTaskId(userId, taskId) {
+
+    //TODO UPDATE THIS SO IT WORK!!
     const author = await prisma.task.findFirst({
         select: {
-            authorId: true
+            authorId: true,
+            contributors: {
+                id: true
+            }
         },
         where: {
-            id: taskId
+            id: taskId,
+            AND:{
+
+            }
         }
     });
 
-    console.log(author);
-
-    return author;
+    return user;
 }
 
 export const markSubTask = async (subtaskId, newState) => {
