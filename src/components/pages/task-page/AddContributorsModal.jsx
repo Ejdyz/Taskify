@@ -9,6 +9,7 @@ import { User } from '@heroui/user';
 import { ScrollShadow } from '@heroui/scroll-shadow';
 // Icons
 import { PlusIcon, TrashIcon } from '@/components/icons/Icons';
+import { addToast } from "@heroui/toast"
 
 export default function AddContributorsModal(props) {
   const contributors = props.contributors;
@@ -17,14 +18,64 @@ export default function AddContributorsModal(props) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  function handleRemoveContributor(email) {
+  async function handleRemoveContributor(email) {
     // Remove contributor
+    setLoading(true)
+    try {
+      const res = await fetch("/api/task/contributor/remove",{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          taskId: taskId,
+          email: email
+        })
+      })
+
+      const response = await res.json();
+      if(!response.success){
+        addToast({ color: "danger", title: response.message})
+      }
+
+      addToast({ color: "success", title: "User removed"})
+    
+    } catch (error) {
+      console.error(error)
+      addToast({ color: "danger", title: "An error occurred while removing user"})
+    }
+    setLoading(false)
   }
 
-  function handleAddContributor() {
-    setMessage({ type: 'error', content: 'User not found' })
+  async function handleAddContributor() {
     // Add contributor
+    setLoading(true)
+    try {
+      const res = await fetch("/api/task/contributor/add",{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          taskId: taskId,
+          email: email
+        })
+      })
+
+      const response = await res.json();
+      if(!response.success){
+        setMessage({ color: "danger", title: response.message})
+      }
+
+      addToast({ color: "success", title: "User removed"})
+    
+    } catch (error) {
+      console.error(error)
+      addToast({ color: "danger", title: "An error occurred while removing user"})
+    }
+    setLoading(false)
   }
 
   function handleEmailChange(value) {
@@ -48,7 +99,7 @@ export default function AddContributorsModal(props) {
           </ModalHeader>
           <ModalBody>
             <Input label="Enter email" onValueChange={handleEmailChange} value={email} variant="bordered" isInvalid={message?.type === "error"} errorMessage={message?.content} />
-            <Button color="primary" fullWidth startContent={<PlusIcon />} onPress={handleAddContributor}>Add</Button>
+            <Button color="primary" isLoading={loading} fullWidth startContent={<PlusIcon />} onPress={handleAddContributor}>Add</Button>
             <ScrollShadow className='max-h-56' >
               <div className='flex flex-col divide-y divide-border'>
                 {/* List of contributors */}
