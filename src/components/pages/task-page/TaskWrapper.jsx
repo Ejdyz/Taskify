@@ -93,6 +93,7 @@ export default function TaskWrapper({ task }) {
               <Tab key="edit" title={<PenIcon />} />
             </Tabs>
             <AddContributorsModal
+              taskId={task.id}
               contributors={task.contributors}
               variant="flat"
               color="primary"

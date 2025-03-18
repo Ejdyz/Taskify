@@ -1,21 +1,39 @@
 import prisma from "../prisma/prisma";
-import { getUserIdFromSessionToken } from "../user/user";
 
-export const addContributor = async (taskTitle, subTasks) => {
-
-    const authorId = await getUserIdFromSessionToken();
-
-    if (authorId === null)
-        return null;
-    
-    const task = await prisma.task.create({
+export const addContributor = async (taskId, contributorEmail) => {
+    const task = await prisma.task.update({
+        where: {
+            id: taskId
+        },
         data: {
-            title: taskTitle,
-            authorId: authorId,
+            contributors: {
+                connect: {
+                    email: contributorEmail,
+                }
+            }
         }
     });
 
-    await createSubTasks(task.id, subTasks);
+    console.log(task);
+
+    return task;
+}
+
+export const removeContributor = async (taskId, contributorEmail) => {
+    const task = await prisma.task.update({
+        where: {
+            id: taskId
+        },
+        data: {
+            contributors: {
+                disconnect: {
+                    email: contributorEmail,
+                }
+            }
+        }
+    });
+
+    console.log(task);
     
     return task;
 }
