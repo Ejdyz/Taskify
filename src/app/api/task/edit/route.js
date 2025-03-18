@@ -1,19 +1,45 @@
-import { editTask } from "@/lib/task/task";
+import { editTask, isUserAuthorOrContributorOfTaskByTaskId} from "@/lib/task/task";
 import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth/auth";
+
 
 export const POST = async (request) => {
     try {
+        
         const body = await request.json();
-        if (!(body.title) || body.title.trim() == "" || !(body.tasks)) {
+        
+        if (!(body.id)) {
             return NextResponse.json({
                 success: false,
-                message: error instanceof SyntaxError ? "JSON syntax error" : (error.details ? error.details[0].message : "An unknown error occurred")
+                message: "Invalid request body"
             }, {
                 status: 400,
             });
         }
-        
-        editTask(body.id, body.title, body.tasks);
+
+        const session = await auth();
+
+        if (!session) {
+            return NextResponse.json({
+                success: false,
+                message: "Unauthorized: User not logged in"
+            }, {
+                status: 401
+            });
+        }
+
+
+        const IsUserAuthor = await isUserAuthorOrContributorOfTaskByTaskId(session.user.id, body.id);
+        if (!IsUserAuthor) {
+            return NextResponse.json({
+                success: false,
+                message: "Insufficient permissions for this operation"
+            }, {
+                status: 401
+            })
+        }
+
+        await editTask(body.id, body.title, body.tasks);
 
         return NextResponse.json({
             success: true,
@@ -32,12 +58,7 @@ export const POST = async (request) => {
             status: 500
         });
     }
-    return NextResponse.json({
-        success: false,
-        message: "Internal server error"
-    }, {
-        status: 500
-    });    
+    
 }
 
 
