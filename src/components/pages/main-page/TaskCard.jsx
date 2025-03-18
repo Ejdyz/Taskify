@@ -14,6 +14,7 @@ import RemoveTaskModal from "@/components/pages/task-page/RemoveTaskModal"
 import { HeartIcon, HeartAddOutlinedIcon, TrashIcon } from "@/components/icons/Icons"
 // Utils
 import { formatDateToCzech } from "@/components/lib/utils"
+import { addToast } from "@heroui/toast"
 
 const TodoListCard = ({ list }) => {
   const [isHovered, setIsHovered] = useState(false)
@@ -22,6 +23,34 @@ const TodoListCard = ({ list }) => {
 
   const handleRedirect = () => {
     router.push(`/task/${list.id}`)
+  }
+
+  const handleMarkTaskFavorite = async (isFavorite) => {
+    setIsFavorite(!isFavorite)
+    try {
+      const response = await fetch(`/api/task/favorite`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+          taskId: list.id,
+          isFavorite: !isFavorite
+        })
+      })
+
+      const res = await response.json()
+      if (!res.success) {
+        addToast({title: res.message, color:"danger"})
+        setIsFavorite(isFavorite)
+        return;
+      }
+
+    } catch (error) {
+      console.error(error)
+      addToast({title: "An error occurred while marking task as favorite", color: 'danger'})
+      setIsFavorite(isFavorite)
+    }
   }
 
   return (
@@ -38,7 +67,7 @@ const TodoListCard = ({ list }) => {
                 variant="light"
                 isIconOnly
                 size="sm"
-                onPress={() => setIsFavorite((prev) => !prev)}
+                onPress={() => handleMarkTaskFavorite(isFavorite)}
               >
 
                 {isFavorite
