@@ -161,16 +161,18 @@ export const addContributorToTask = async (contributor, taskId) => {
 }
 
 export const editTask = async (taskId, taskTitle, subTasks) => {
-    
-    const task = await prisma.task.updateMany({
+
+   
+    const task = await prisma.task.update({
         where: {
             id: taskId
         },
         data: {
-            name: taskTitle
+            title: taskTitle,
+            updatedAt: new Date()
         }
     });
-
+    
     await prisma.subTask.deleteMany({
         where: {
             taskId: taskId
@@ -180,7 +182,7 @@ export const editTask = async (taskId, taskTitle, subTasks) => {
     await createSubTasks(taskId, subTasks);
 
     return task;
-}
+};
 
 export const removeTask = async (taskId) => {
     
@@ -193,7 +195,9 @@ export const removeTask = async (taskId) => {
     return task;
 }
 
-export async function isUserTaskAuthorByUserId(userId, taskId)
+export async function 
+
+isUserTaskAuthorByUserId(userId, taskId)
 {
     const author = await prisma.task.findFirst({
         where: {
@@ -268,7 +272,6 @@ export const markSubTask = async (subtaskId, newState) => {
 
         return true;
     }
-
     return false;
 }
 
