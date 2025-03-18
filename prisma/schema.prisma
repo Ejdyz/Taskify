@@ -1,36 +1,30 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
- 
-generator client {
-  provider = "prisma-client-js"
-}
- 
-model User {
-  id            String          @id @default(cuid())
-  name          String?
-  email         String?         @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  tasks Task[] @relation("TaskAuthor")
-  contributedTasks Task[]
 
-  favoriteTasks Task[] @relation("FavoriteTasks")
+model User {
+  id               String          @id @default(cuid())
+  name             String?
+  email            String?         @unique
+  emailVerified    DateTime?
+  image            String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  accounts         Account[]
+  Authenticator    Authenticator[]
+  sessions         Session[]
+  tasks            Task[]          @relation("TaskAuthor")
+  favoriteTasks    Task[]          @relation("FavoriteTasks")
+  contributedTasks Task[]          @relation("TaskToUser")
 }
- 
+
 model Account {
-  id                String  @id @default(cuid())
+  id                String   @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -42,35 +36,31 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([provider, providerAccountId])
 }
- 
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
 }
- 
-// Optional for WebAuthn support
+
 model Authenticator {
   credentialID         String  @unique
   userId               String
@@ -80,34 +70,27 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@id([userId, credentialID])
 }
 
-
-
 model Task {
-  id          String    @id @default(cuid())
-  title        String   @default("Untitled")
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime?
-  authorId    String
-
-  author      User      @relation("TaskAuthor", fields: [authorId], references: [id], onDelete: Cascade)
-  contributors User[]
-
-  tasks    SubTask[] @relation("TaskSubTasks")
-
-  favoritedBy User[] @relation("FavoriteTasks")
+  id           String    @id @default(cuid())
+  title        String    @default("Untitled")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime?
+  authorId     String
+  tasks        SubTask[] @relation("TaskSubTasks")
+  author       User      @relation("TaskAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  favoritedBy  User[]    @relation("FavoriteTasks")
+  contributors User[]    @relation("TaskToUser")
 }
 
 model SubTask {
-  id        String   @id @default(cuid())
-  content   String
-  isMarked  Boolean
-  taskId    String
-
-  task      Task     @relation("TaskSubTasks", fields: [taskId], references: [id], onDelete: Cascade)
+  id       String  @id @default(cuid())
+  content  String
+  isMarked Boolean
+  taskId   String
+  task     Task    @relation("TaskSubTasks", fields: [taskId], references: [id], onDelete: Cascade)
 }

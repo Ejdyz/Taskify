@@ -17,6 +17,7 @@ export const POST = async (request) => {
             });
         }
         
+
         const session = await auth();
         
         if (!session) {
@@ -27,7 +28,7 @@ export const POST = async (request) => {
                 status: 401
             });
         }
-         if (false) { //!(await isUserAuthorOrContributorOfTaskByTaskId(session.user.id, body.taskId)) || false) {
+         if (!(await isUserAuthorOrContributorOfTaskByTaskId(session.user.id, body.taskId))) {
             return NextResponse.json({
                 success: false,
                 message: "Insufficient permissions for this operation!"
@@ -53,8 +54,6 @@ export const POST = async (request) => {
                 status: 500
             });
         }
-
-
     } catch (error) {
         console.error(error);
         return NextResponse.json({
