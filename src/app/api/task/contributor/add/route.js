@@ -12,8 +12,6 @@ export const POST = async (request) => {
     try {
         const body = await request.json();
 
-        console.log(request);
-        
         if (!(body.taskId) || body.taskId === undefined || !(body.email) || body.email === undefined)  {
             return NextResponse.json({
                 success: false,
@@ -63,9 +61,8 @@ export const POST = async (request) => {
         }
         else {
             return NextResponse.json({
-            
                 success: false,
-                message: "Something went wrong while adding a contributor!"
+                message: "User does not exist!"
             }, {
                 status: 500
             });

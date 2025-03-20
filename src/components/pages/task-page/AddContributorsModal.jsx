@@ -39,8 +39,8 @@ export default function AddContributorsModal(props) {
       if(!response.success){
         addToast({ color: "danger", title: response.message})
       }
-
-      addToast({ color: "success", title: "User removed"})
+      else
+        addToast({ color: "success", title: "User removed"})
     
     } catch (error) {
       console.error(error)
@@ -68,8 +68,8 @@ export default function AddContributorsModal(props) {
       if(!response.success){
         setMessage({ color: "danger", title: response.message})
       }
-
-      addToast({ color: "success", title: "User removed"})
+      else
+        addToast({ color: "success", title: "User removed"})
     
     } catch (error) {
       console.error(error)
