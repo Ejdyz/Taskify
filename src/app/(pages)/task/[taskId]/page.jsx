@@ -18,6 +18,9 @@ export default async function page(props) {
   const params = await props.params;
   const taskId = params.taskId;
 
+  if (!session) {
+    notFound();
+  }
   
   // Check if task exists
   if (!taskId) {
@@ -30,7 +33,6 @@ export default async function page(props) {
   if (!task) {
     notFound();
   }
-
 
   return <TaskWrapper task={task} />   
 }
