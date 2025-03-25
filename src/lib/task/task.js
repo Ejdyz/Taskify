@@ -101,10 +101,17 @@ export const getAllUserTasks = async (userId) => {
         },
         select: {
             id: true,
-            // isFavorite
             createdAt: true,
             updatedAt: true,
             title: true,
+            favoritedBy: {
+                where: {
+                    id: userId
+                },
+                select: {
+                    id: true
+                }
+            },
             tasks: {
                 select: {
                     id: true,
@@ -134,7 +141,10 @@ export const getAllUserTasks = async (userId) => {
         }
     });
 
-    return tasks
+    return tasks.map(task => ({
+        ...task,
+        userFavorited: task.favoritedBy.length > 0
+    }));
 }
 
 export const addContributorToTask = async (contributor, taskId) => {
