@@ -58,7 +58,7 @@ const TodoListCard = ({ list }) => {
       <CardHeader className="flex justify-between items-center">
         <div onClick={handleRedirect} className="flex flex-col items-start w-full">
           <h3 className="font-semibold text-xl">{list.title}</h3>
-          <p className="text-gray-500 text-xs">{formatDateToCzech(list.updatedAt)}</p>
+          <p className="text-gray-500 text-xs">{formatDateToCzech(list.updatedAt || list.createdAt)}</p>
         </div>
         <div className="cursor-pointer ml-2" >
           {isHovered && (

@@ -2,7 +2,7 @@
 // Hooks
 import { useState, useRef } from "react";
 import { addToast } from "@heroui/toast";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 // Components
 import { Button } from "@heroui/button";
 import { Tab, Tabs } from "@heroui/tabs";
@@ -15,10 +15,9 @@ import RemoveTaskModal from "./RemoveTaskModal";
 //Icons
 import { TrashIcon, ArrowLeftIcon, MultipleUsersIcon, TaskListIcon, PenIcon } from "@/components/icons/Icons";
 
-export default function TaskWrapper({ task }) {
-  console.log(task);
+export default function TaskWrapper({ task, sessionUserId }) {
   const [mode, setMode] = useState("view");
-
+  
   const startingTasks = task.tasks.map((task, index) => ({ id: index, ...task }))
   const tasksRef = useRef(startingTasks);
   const router = useRouter();
@@ -68,6 +67,16 @@ export default function TaskWrapper({ task }) {
     setMode(tab);
   }
 
+  function handleMarkTask (taskId, isMarked) {
+    const newTasks = tasksRef.current.map(task => {
+      if (task.id === taskId) {
+        task.isMarked = isMarked
+      }
+      return task
+    })
+    tasksRef.current = newTasks
+  }
+
   return (
     <div className="w-full h-screen dotted-vignette fixed overflow-auto">
       <div className="flex flex-col items-center gap-4 w-full mb-20">
@@ -92,30 +101,35 @@ export default function TaskWrapper({ task }) {
               <Tab key="view" title={<TaskListIcon />} />
               <Tab key="edit" title={<PenIcon />} />
             </Tabs>
-            <AddContributorsModal
-              taskId={task.id}
-              contributors={task.contributors}
-              variant="flat"
-              color="primary"
-              className="font-bold"
-              isIconOnly
-            >
-              <MultipleUsersIcon />
-            </AddContributorsModal>
-            <RemoveTaskModal
-              taskId={task.id}
-              redirect="/"
-              variant="flat"
-              isIconOnly
-              color="danger"
-            >
-              <TrashIcon />
-            </RemoveTaskModal>
+            {task.author.id === sessionUserId &&
+                <AddContributorsModal
+                  taskId={task.id}
+                  contributors={task.contributors}
+                  variant="flat"
+                  color="primary"
+                  className="font-bold"
+                  isIconOnly
+                >
+                  <MultipleUsersIcon />
+                </AddContributorsModal>}
+                {task.author.id === sessionUserId &&
+                <RemoveTaskModal
+                  taskId={task.id}
+                  redirect="/"
+                  variant="flat"
+                  isIconOnly
+                  color="danger"
+                >
+                  <TrashIcon />
+                </RemoveTaskModal>
+
+            }
           </div>
         </MenuBar>
         {mode === "view"
           ? <TaskView
             tasks={tasksRef.current}
+            handleMarkTask={handleMarkTask}
           />
           : <GoalsEditForm
             startingTasks={tasksRef.current}

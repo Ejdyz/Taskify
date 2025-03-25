@@ -10,6 +10,7 @@ import { ScrollShadow } from '@heroui/scroll-shadow';
 // Icons
 import { PlusIcon, TrashIcon } from '@/components/icons/Icons';
 import { addToast } from "@heroui/toast"
+import { useRouter } from "next/navigation"
 
 export default function AddContributorsModal(props) {
   const contributors = props.contributors;
@@ -19,6 +20,7 @@ export default function AddContributorsModal(props) {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
   async function handleRemoveContributor(email) {
     // Remove contributor
@@ -38,9 +40,9 @@ export default function AddContributorsModal(props) {
       const response = await res.json();
       if(!response.success){
         addToast({ color: "danger", title: response.message})
-      }
-      else {
+      }else {
         addToast({ color: "success", title: "User removed"})
+        router.refresh()
       }
     
     } catch (error) {
@@ -67,9 +69,11 @@ export default function AddContributorsModal(props) {
 
       const response = await res.json();
       if(!response.success){
-        setMessage({ color: "danger", title: response.message})
+        setMessage({ type: "error", content: response.message})
       }else{
         addToast({ color: "success", title: "User added"})
+        setEmail('')
+        router.refresh()
       }
 
     
@@ -100,7 +104,14 @@ export default function AddContributorsModal(props) {
             Contributors
           </ModalHeader>
           <ModalBody>
-            <Input label="Enter email" onValueChange={handleEmailChange} value={email} variant="bordered" isInvalid={message?.type === "error"} errorMessage={message?.content} />
+            <Input 
+              label="Enter email" 
+              onValueChange={handleEmailChange} 
+              value={email} variant="bordered" 
+              isInvalid={message?.type === "error"} 
+              errorMessage={message?.content} 
+              onKeyDown={(e) => e.key === "Enter" && handleAddContributor()}
+            />
             <Button color="primary" isLoading={loading} fullWidth startContent={<PlusIcon />} onPress={handleAddContributor}>Add</Button>
             <ScrollShadow className='max-h-56' >
               <div className='flex flex-col divide-y divide-border'>
