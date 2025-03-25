@@ -195,9 +195,7 @@ export const removeTask = async (taskId) => {
     return task;
 }
 
-export async function 
-
-isUserTaskAuthorByUserId(userId, taskId)
+export async function isUserTaskAuthorByUserId(userId, taskId)
 {
     const author = await prisma.task.findFirst({
         where: {
@@ -220,6 +218,27 @@ export async function isUserSubTaskAuthorByUserId(userId, subtaskId) {
         }
     })
     return subtask.task.authorId === userId;
+}
+
+export async function isUserSubTaskAuthorOrContributorByUserId(userId, subtaskId) {
+    const author = await prisma.subTask.findFirst({
+        select: {
+            task: {
+                select: {
+                    authorId: true,
+                    contributors: true
+                }
+            }
+        },
+        where: {
+           id: subtaskId
+        }
+    });
+
+    if (author === null)
+        return false;
+
+    return (author.task.authorId === userId || author.task.contributors.includes(a => a.id === userId));
 }
 
 export async function isUserAuthorOrContributorOfTaskByTaskId(userId, taskId) {
@@ -259,6 +278,7 @@ export const markSubTask = async (subtaskId, newState) => {
         }
     });
 
+
     if (subtask)
     {
         const updatedSubtask = await prisma.subTask.update({
@@ -266,12 +286,16 @@ export const markSubTask = async (subtaskId, newState) => {
                 id: subtaskId,
             },
             data: {
-                isMarked: true,
+                isMarked: newState,
             }
         });
 
-        return true;
+        if (updatedSubtask === null)
+            return false;
+        else
+            return true;
     }
+
     return false;
 }
 

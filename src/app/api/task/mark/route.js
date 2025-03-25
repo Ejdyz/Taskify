@@ -1,4 +1,4 @@
-import { isUserSubTaskAuthorByUserId, markSubTask } from "@/lib/task/task";
+import { isUserSubTaskAuthorOrContributorByUserId, markSubTask } from "@/lib/task/task";
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth/auth";
 
@@ -27,16 +27,7 @@ export const POST = async (request) => {
             });
         }
 
-        if (!(await isUserSubTaskAuthorByUserId(session.user.id, body.goalId))) {
-            return NextResponse.json({
-                success: false,
-                message: "Insufficient permissions for this operation!"
-            }, {
-                status: 401
-            });
-        }
-
-        if (session.user.id !== body.authorId) {
+        if (!(isUserSubTaskAuthorOrContributorByUserId(session.user.id, body.goalId))) {
             return NextResponse.json({
                 success: false,
                 message: "Forbidden: You are not the author of this task"
