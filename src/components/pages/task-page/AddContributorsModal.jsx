@@ -69,11 +69,11 @@ export default function AddContributorsModal(props) {
         setMessage({ color: "danger", title: response.message})
       }
 
-      addToast({ color: "success", title: "User removed"})
+      addToast({ color: "success", title: "User added"})
     
     } catch (error) {
       console.error(error)
-      addToast({ color: "danger", title: "An error occurred while removing user"})
+      addToast({ color: "danger", title: "An error occurred while adding user"})
     }
     setLoading(false)
   }
