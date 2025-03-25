@@ -1,10 +1,37 @@
-import React from 'react'
+import { useState } from 'react'
 import { Checkbox  } from '@heroui/checkbox'
+import { addToast } from "@heroui/toast"
+import { useRouter } from "next/navigation"
 
 export default function TaskView({tasks}) {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
-  function handleCheckboxChange(taskId, e) {
-    // handleTaskChange(taskId, "isMarked", e.target.checked);
+  async function handleCheckboxChange(taskId, e) {
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/task/mark`, {
+        method: 'POST',
+        body: JSON.stringify({ 
+          goalId: taskId,
+          isMarked: e.target.checked
+        })
+      })
+
+      const res = await response.json()
+
+      if (!res.success) {
+        addToast({title: res.message, color: 'danger'})
+      }else{
+        console.log("Task updated")
+      }
+
+    } catch (error) {
+      addToast({title: "An error occurred", color: 'danger'})
+      console.error(error)
+    }
+    router.refresh()
+    setLoading(false)
   };
 
   return (
@@ -12,6 +39,7 @@ export default function TaskView({tasks}) {
       {tasks.map((task, index) => (
           <div className="flex gap-2 w-full" key={task.id}>
             <Checkbox
+              isDisabled={loading}
               size="lg"
               defaultChecked={task.isMarked}
               isSelected={task.isMarked}
