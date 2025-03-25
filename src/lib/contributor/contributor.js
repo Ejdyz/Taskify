@@ -1,39 +1,45 @@
 import prisma from "../prisma/prisma";
 
 export const addContributor = async (taskId, contributorEmail) => {
-    const task = await prisma.task.update({
-        where: {
-            id: taskId
-        },
-        data: {
-            contributors: {
-                connect: {
-                    email: contributorEmail,
+    try {
+        const task = await prisma.task.update({
+            where: { 
+                id: taskId 
+            },
+            data: {
+                contributors: {
+                    connect: { 
+                        email: contributorEmail 
+                    }
                 }
             }
-        }
-    });
+        });
 
-    console.log(task);
-
-    return task;
-}
+        return !!task;
+    } catch (error) {
+        console.error("Error adding contributor:", error);
+        return false;
+    }
+};
 
 export const removeContributor = async (taskId, contributorEmail) => {
-    const task = await prisma.task.update({
-        where: {
-            id: taskId
-        },
-        data: {
-            contributors: {
-                disconnect: {
-                    email: contributorEmail,
+    try {
+        const task = await prisma.task.update({
+            where: { 
+                id: taskId 
+            },
+            data: {
+                contributors: {
+                    disconnect: { 
+                        email: contributorEmail 
+                    }
                 }
             }
-        }
-    });
+        });
 
-    console.log(task);
-    
-    return task;
-}
+        return !!task;
+    } catch (error) {
+        console.error("Error removing contributor:", error);
+        return false;
+    }
+};

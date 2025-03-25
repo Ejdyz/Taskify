@@ -1,7 +1,7 @@
 import { isUserTaskAuthorByUserId } from "@/lib/task/task";
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth/auth";
-import { addContributor } from "@/lib/contributor/contributor";
+import { removeContributor } from "@/lib/contributor/contributor";
 
 function validateEmail(email) {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,10 +51,10 @@ export const POST = async (request) => {
             });
         }
         
-        if (await addContributor(body.taskId, body.email)){
+        if (await removeContributor(body.taskId, body.email)){
             return NextResponse.json({
                 success: true,
-                message: "Successfully added a contributor!"
+                message: "Successfully removed a contributor!"
             }, {
                 status: 200
             });
