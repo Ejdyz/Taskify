@@ -9,8 +9,9 @@ import { Avatar, AvatarGroup } from "@heroui/avatar";
 import { User } from "@heroui/user";
 import { Button } from "@heroui/button";  
 import RemoveTaskModal from "../task-page/RemoveTaskModal"
+import FavoriteButton from "./FavoriteButton";
 // Icons
-import { HeartIcon, HeartAddOutlinedIcon, TrashIcon } from "@/components/icons/Icons";
+import { TrashIcon } from "@/components/icons/Icons";
 
 export default function TasksTable({tasks}) {
   const router = useRouter()
@@ -19,9 +20,6 @@ export default function TasksTable({tasks}) {
     router.push(`/task/${taskId}`)
   }
 
-  function setIsFavorite(taskId){
-    console.log("setIsFavorite", taskId)
-  }
   
   return (
     <Table isStriped className="md:w-3/4 w-full px-3 " aria-label="Example static collection table" onRowAction={(item) => redirectToItem(item)}>
@@ -54,18 +52,7 @@ export default function TasksTable({tasks}) {
               }
               </TableCell>
             <TableCell>
-              <Button
-                variant="light"
-                isIconOnly
-                size="sm"
-                onPress={() => setIsFavorite(item.id)}
-              >
-
-                {item.isFavorite
-                  ? <HeartIcon color={"red"} />
-                  : <HeartAddOutlinedIcon />
-                }
-              </Button>
+              <FavoriteButton taskId={item.id} isDefaultFavorite={item.userFavorited} />
             </TableCell>
             <TableCell>
               <RemoveTaskModal 

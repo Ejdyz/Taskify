@@ -7,50 +7,21 @@ import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card"
 import { Avatar, AvatarGroup } from "@heroui/avatar"
 import { ScrollShadow } from "@heroui/scroll-shadow"
 import { Checkbox } from "@heroui/checkbox"
-import { Button } from "@heroui/button"
+import FavoriteButton from "./FavoriteButton"
 import { Tooltip } from "@heroui/tooltip"
 import RemoveTaskModal from "@/components/pages/task-page/RemoveTaskModal"
 // Icons
-import { HeartIcon, HeartAddOutlinedIcon, TrashIcon } from "@/components/icons/Icons"
+import {HeartAddOutlinedIcon, HeartIcon, TrashIcon } from "@/components/icons/Icons"
 // Utils
 import { formatDateToCzech } from "@/components/lib/utils"
-import { addToast } from "@heroui/toast"
 
 const TodoListCard = ({ list }) => {
+  console.log(list)
   const [isHovered, setIsHovered] = useState(false)
-  const [isFavorite, setIsFavorite] = useState(list.isFavorite)
   const router = useRouter()
 
   const handleRedirect = () => {
     router.push(`/task/${list.id}`)
-  }
-
-  const handleMarkTaskFavorite = async (isFavorite) => {
-    setIsFavorite(!isFavorite)
-    try {
-      const response = await fetch(`/api/task/favorite`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ 
-          taskId: list.id,
-          isFavorite: !isFavorite
-        })
-      })
-
-      const res = await response.json()
-      if (!res.success) {
-        addToast({title: res.message, color:"danger"})
-        setIsFavorite(isFavorite)
-        return;
-      }
-
-    } catch (error) {
-      console.error(error)
-      addToast({title: "An error occurred while marking task as favorite", color: 'danger'})
-      setIsFavorite(isFavorite)
-    }
   }
 
   return (
@@ -63,18 +34,6 @@ const TodoListCard = ({ list }) => {
         <div className="cursor-pointer ml-2" >
           {isHovered && (
             <div className="flex gap-1 pr-1 items-center">
-              <Button
-                variant="light"
-                isIconOnly
-                size="sm"
-                onPress={() => handleMarkTaskFavorite(isFavorite)}
-              >
-
-                {isFavorite
-                  ? <HeartIcon color={"red"} />
-                  : <HeartAddOutlinedIcon />
-                }
-              </Button>
               <RemoveTaskModal 
                 taskId={list.id}
                 variant="light"
@@ -83,8 +42,15 @@ const TodoListCard = ({ list }) => {
                 color="danger" >
                 <TrashIcon />
               </RemoveTaskModal>
+              <FavoriteButton taskId={list.id} isDefaultFavorite={list.userFavorited}/>
             </div>
           )}
+          {!isHovered &&  <>
+            {list.userFavorited
+              ? <HeartIcon color={"red"} />
+              : <HeartAddOutlinedIcon />}
+            </>
+          }
         </div>
       </CardHeader>
       <CardBody onClick={handleRedirect}>
