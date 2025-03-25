@@ -20,6 +20,7 @@ export default function TaskWrapper({ task, sessionUserId }) {
   
   const startingTasks = task.tasks.map((task, index) => ({ id: index, ...task }))
   const tasksRef = useRef(startingTasks);
+  const newTasksRef = useRef(startingTasks);
   const router = useRouter();
 
   const [title, setTitle] = useState(task.title || "Untitled");
@@ -30,7 +31,7 @@ export default function TaskWrapper({ task, sessionUserId }) {
   };
 
   function handleUpdateTaskRef(tasks) {
-    tasksRef.current = tasks;
+    newTasksRef.current = tasks;
   }
 
   async function handleTaskEditSubmit () {
@@ -41,7 +42,7 @@ export default function TaskWrapper({ task, sessionUserId }) {
         body: JSON.stringify({ 
           id: task.id,
           title,
-          tasks: tasksRef.current
+          tasks: newTasksRef.current
         })
       })
 
@@ -49,20 +50,23 @@ export default function TaskWrapper({ task, sessionUserId }) {
 
       if (res.success) {
         console.log("Task updated")
+        tasksRef.current = newTasksRef.current;
       }else{
         addToast({title: res.message, color: 'danger'})
+        setTitle(task.title || "Untitled");
       }
-      setLoading(false)
-      router.refresh()
-
+      
     } catch (error) {
       addToast({title: "An error occurred", color: 'danger'})
+      console.error(error)
     }
+    setLoading(false)
+    router.refresh()
   }
 
-  function handleTabChange(tab) {
+  async function handleTabChange(tab) {
     if (tab === "view") {
-      handleTaskEditSubmit()
+      await handleTaskEditSubmit(title, tasksRef.current)
     }
     setMode(tab);
   }
@@ -102,27 +106,26 @@ export default function TaskWrapper({ task, sessionUserId }) {
               <Tab key="edit" title={<PenIcon />} />
             </Tabs>
             {task.author.id === sessionUserId &&
-                <AddContributorsModal
-                  taskId={task.id}
-                  contributors={task.contributors}
-                  variant="flat"
-                  color="primary"
-                  className="font-bold"
-                  isIconOnly
-                >
-                  <MultipleUsersIcon />
-                </AddContributorsModal>}
-                {task.author.id === sessionUserId &&
-                <RemoveTaskModal
-                  taskId={task.id}
-                  redirect="/"
-                  variant="flat"
-                  isIconOnly
-                  color="danger"
-                >
-                  <TrashIcon />
-                </RemoveTaskModal>
-
+              <AddContributorsModal
+                taskId={task.id}
+                contributors={task.contributors}
+                variant="flat"
+                color="primary"
+                className="font-bold"
+                isIconOnly
+              >
+                <MultipleUsersIcon />
+              </AddContributorsModal>}
+            {task.author.id === sessionUserId &&
+              <RemoveTaskModal
+                taskId={task.id}
+                redirect="/"
+                variant="flat"
+                isIconOnly
+                color="danger"
+              >
+                <TrashIcon />
+              </RemoveTaskModal>
             }
           </div>
         </MenuBar>
