@@ -11,8 +11,6 @@ export const metadata = {
   keywords: "Task, page, tasks"
 }
 
-
-
 export default async function page(props) {
   const session = await auth();
   const params = await props.params;
@@ -34,5 +32,5 @@ export default async function page(props) {
     notFound();
   }
 
-  return <TaskWrapper task={task} />   
+  return <TaskWrapper task={task} sessionUserId={session.user.id} />   
 }
