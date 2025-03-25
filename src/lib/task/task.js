@@ -268,7 +268,7 @@ export async function isUserAuthorOrContributorOfTaskByTaskId(userId, taskId) {
     if (author === null)
         return false;
 
-    return (author.authorId === userId || author.contributors.includes(a => a.id === userId));
+    return (author.authorId === userId || author.contributors.some(a => a.id === userId));
 }
 
 export const markSubTask = async (subtaskId, newState) => {
