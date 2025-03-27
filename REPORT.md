@@ -102,6 +102,41 @@
 
 ---
 
-### Session 3 | 25.3. 2025
 
-### Session 3 | 27.3. 2025
+### Session 5 | 25.3. 2025
+
+  #### Work Description
+
+- Backend was focused on completing all the backend funcionalities.
+
+-  **Michal** worked on fixing most of the security and logical issues and flaws among the routes. He made sure, that every API route returned all the correct data and that all of the exceptions were handled appropriately.
+
+-  **Petr** helped Michal with finding and fixing bugs. He also implemented a route for retrieving users with similar email  ([Issue 18](https://github.com/Ejdyz/Taskify/issues/18)).
+
+-  **Jan** unified all of the functionality of the backend to the frontend. He built the application and uploaded it to his server. The application is now publicly accessible at: [here](https://taskify.ejdy.cz/ "https://taskify.ejdy.cz/")
+
+#### Team report
+
+| Name\Task | Build & Upload | Searching for users | Correction of API routes | Suggested Mark |
+
+|--------------|-------------------------|------------------------|---------------------------------|----------------|
+
+| Adam Jan | ✅ | - | - | **1** |
+
+| Novák Michal | - | - | ✅ | **1** |
+
+| Polák Petr | - | ✅ | - | **1** |
+
+  
+
+#### Result
+
+- Backend delivered all of the remaining API routes.
+
+- Frontend implemented those API routes, built the application and uploaded it to a server.
+
+  
+
+---
+
+### Session 6 | 27.3. 2025
