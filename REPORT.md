@@ -18,6 +18,7 @@
 ## 🔗 Links
 - [Agile board](https://github.com/users/Ejdyz/projects/4)
 - [Github Issues](https://github.com/Ejdyz/Taskify/issues)
+- [BUILD](https://taskify.ejdy.cz/ "https://taskify.ejdy.cz/")
 
 ## 👨‍💻 Sessions
 
