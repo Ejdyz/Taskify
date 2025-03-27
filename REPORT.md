@@ -117,16 +117,12 @@
 
 #### Team report
 
-| Name\Task | Build & Upload | Searching for users | Correction of API routes | Suggested Mark |
 
-|--------------|-------------------------|------------------------|---------------------------------|----------------|
-
-| Adam Jan | ✅ | - | - | **1** |
-
-| Novák Michal | - | - | ✅ | **1** |
-
-| Polák Petr | - | ✅ | - | **1** |
-
+| Name\Task    | Build & Upload  | Searching for users | Correction of API routes | Suggested Mark  | 
+|--------------|-----------------|---------------------|--------------------------|-----------------|
+| Adam Jan     | ✅              | -                   | -                        | **1**           |
+| Novák Michal | -                | -                   | ✅                      | **1**           |
+| Polák Petr   | -                | ✅                 | -                        | **1**           |
   
 
 #### Result
