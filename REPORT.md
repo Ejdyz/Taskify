@@ -108,14 +108,14 @@
 - Backend was focused on completing all the backend funcionalities.
 -  **Michal** worked on fixing most of the security and logical issues and flaws among the routes. He made sure, that every API route returned all the correct data and that all of the exceptions were handled appropriately.
 -  **Petr** helped Michal with finding and fixing bugs. He also implemented a route for retrieving users with similar email  ([Issue 18](https://github.com/Ejdyz/Taskify/issues/18)).
--  **Jan** unified all of the functionality of the backend to the frontend. He built the application and uploaded it to his server. The application is now publicly accessible at: [here](https://taskify.ejdy.cz/ "https://taskify.ejdy.cz/")
+-  **Jan** unified all of the functionality of the backend to the frontend. He built the application and uploaded it to his server. 
 
 #### Team report
 | Name\Task    | Build & Upload  | Searching for users | Correction of API routes | Suggested Mark  | 
 |--------------|-----------------|---------------------|--------------------------|-----------------|
 | Adam Jan     | ✅              | -                   | -                        | **1**           |
-| Novák Michal | -                | -                   | ✅                      | **1**           |
-| Polák Petr   | -                | ✅                 | -                        | **1**           |
+| Novák Michal | -               | -                   | ✅                       | **1**           |
+| Polák Petr   | -               | ✅                  | -                        | **1**           |
   
 
 #### Result
@@ -126,19 +126,22 @@
 
 ### Session 6 | 27.3. 2025
 #### Work Description
-- Backend was completely done, so there was no work.
--  **Michal** amd **Petr** reviewed the codebase and linked all the commits to it's respective issues.
--  **Jan** was fixing the deployment issues.
+- Backend was completely done with their assigned tasks, so there was no work to do.
+-  **Michal** and **Petr** reviewed the codebase and linked all the commits to it's respective issues.
+-  **Jan** was fixing some deployment issues, that were caused by the production build.
 
 #### Team report
-| Name\Task    | Deployment | Suggested Mark  | 
-|--------------|------------|-----------------|
-| Adam Jan     | ✅         | **1**           |
-| Novák Michal | -          | -               |
-| Polák Petr   | -          | -               |  
+| Name\Task    | Deployment | Linking commits to assigned issues  |  Suggested Mark  | 
+|--------------|------------|-------------------------------------|-----------------|
+| Adam Jan     | ✅         | -                                   | **1**           |
+| Novák Michal | -          | ✅                                  | **1**           |
+| Polák Petr   | -          | ✅                                  | **1**           |
 
 #### Result
 - Backend didn't have anything to do anymore. They linked all the commits.
 - Frontend fixed the deployment of the application, since it have some issues running.
 
 ---
+
+## The application is now fully done and publicly accessible at: [https://taskify.ejdy.cz/](https://taskify.ejdy.cz/)
+
