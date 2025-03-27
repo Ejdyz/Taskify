@@ -98,4 +98,10 @@
 
 #### Result
 - Backend enhanced security on API routes and delivered new function.
-- Frontend implemented favoriting task and made task page. 
+- Frontend implemented favoriting task and made task page.
+
+---
+
+### Session 3 | 25.3. 2025
+
+### Session 3 | 27.3. 2025
