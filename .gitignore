@@ -41,11 +41,10 @@ next-env.d.ts
 # VSCode
 /.vscode
 
-# package-lock.json
-package-lock.json
-**/package-lock.json
 prisma/dbml/*
 prisma/dev.db
+prisma/*.db
+prisma/*.db-journal
 
 # uploads folder
 uploads/files/students/presentations
