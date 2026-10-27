@@ -248,7 +248,7 @@ export async function isUserSubTaskAuthorOrContributorByUserId(userId, subtaskId
     if (author === null)
         return false;
 
-    return (author.task.authorId === userId || author.task.contributors.includes(a => a.id === userId));
+    return (author.task.authorId === userId || author.task.contributors.some(a => a.id === userId));
 }
 
 export async function isUserAuthorOrContributorOfTaskByTaskId(userId, taskId) {

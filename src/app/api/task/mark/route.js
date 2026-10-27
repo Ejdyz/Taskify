@@ -27,7 +27,7 @@ export const POST = async (request) => {
             });
         }
 
-        if (!(isUserSubTaskAuthorOrContributorByUserId(session.user.id, body.goalId))) {
+        if (!(await isUserSubTaskAuthorOrContributorByUserId(session.user.id, body.goalId))) {
             return NextResponse.json({
                 success: false,
                 message: "Forbidden: You are not the author of this task"
