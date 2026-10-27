@@ -7,9 +7,10 @@ import { SparklesCore } from "@/components/ui/sparkles";
 
 const SparklesCTA = ({title}) => {
   const [mounted, setMounted] = useState(false);
-  const {theme} = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   useEffect(() => setMounted(true), []);
-  console.log("Mounted: ", mounted);
+  const isDark = resolvedTheme === "dark" || theme === "dark";
+
   return ( 
     <div className="md:h-[100dvh] h-[90dvh] will-change z-20 w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
     <h1 className="text-7xl lg:text-9xl font-bold text-center relative z-20">
@@ -29,7 +30,7 @@ const SparklesCTA = ({title}) => {
           maxSize={1}
           particleDensity={1200}
           className="w-full h-full"
-          particleColor={theme === "dark"? "#ffffff": "#000000"}
+          particleColor={isDark ? "#ffffff" : "#000000"}
         />
       }
       {/* Radial Gradient to prevent sharp edges */}

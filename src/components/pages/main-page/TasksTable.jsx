@@ -41,7 +41,7 @@ export default function TasksTable({tasks}) {
             </TableCell>
             <TableCell className="cursor-pointer">
               {item.contributors.length === 0 
-                ? <p className="text-gray-500">No contributors</p>
+                ? <p className="text-gray-500 dark:text-gray-400">No contributors</p>
                 : (
                   <AvatarGroup>
                     {item.contributors.map((contributor) => (

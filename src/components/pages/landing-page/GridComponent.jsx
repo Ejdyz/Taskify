@@ -18,7 +18,7 @@ const GridComponent = () => {
       <div className="md:h-[20dvh] h-[10dvh] relative flex size-full items-center justify-center rounded-lg py-48">
         <div className="text-center mx-auto z-30">
           <h1 className="text-5xl font-semibold tracking-tight text-balance sm:text-7xl">Todo List That Will <span className="text-primary">Change</span> Your Life.</h1>
-          <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
+          <p className="mt-8 text-lg font-medium text-pretty text-gray-500 dark:text-gray-400 sm:text-xl/8">
             Effortless productivity, seamless experience. Get things done your way, simple, and beautifully. Try it now!
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">

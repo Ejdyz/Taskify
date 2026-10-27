@@ -12,7 +12,7 @@ const tailwindConfig = {
 		extend: {
 			colors: {
 				background: 'rgba(var(--background),1)',
-				foreground: 'hsl(var(--foreground))',
+				foreground: 'var(--foreground)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

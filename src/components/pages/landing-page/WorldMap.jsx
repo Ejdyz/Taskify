@@ -12,7 +12,7 @@ import WorldMap from "@/components/ui/world-map";
     <div className=" bg-background w-10/12 mx-auto">
       <div className="max-w-7xl mx-auto text-center">
         <p className="font-bold text-7xl "><span className="text-primary">Remote</span> Connectivity</p>
-        <p className="text-sm md:text-lg text-neutral-500 max-w-2xl mx-auto py-4">
+        <p className="text-sm md:text-lg text-neutral-500 dark:text-neutral-400 max-w-2xl mx-auto py-4">
           Break free from traditional boundaries. Work from anywhere, at the
           comfort of your own studio apartment. Perfect for Nomads and
           Travellers.
